@@ -41,7 +41,7 @@ Es soll nun eine webbasierte Mailbox Monitoring Applikation entwickelt werden, w
 
 ### Konzeption
 
-1. Sämtliche Use Cases dokumentieren, vom PO absegenen lassen
+1. Sämtliche Use Cases dokumentieren, vom PO absegnen lassen
 1. Terminplanung
 1. PoC erstellen (welche Gems, wie Webservice bauen, Config Files YAML ?)
 1. Architektur konzipieren (Flussdiagramme, Klassendiagramme, usw.)
