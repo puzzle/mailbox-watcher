@@ -6,6 +6,8 @@
 | Mailbox-Watcher | Der Mailbox-Watcher ist die Mailbox Monitoring Applikation. |
 | Monitoring System | Das Monitoring System überwacht die Umgebung. Auf dem Monitoring System kann man sehen, ob auf der Umgebung Fehler auftreten. Ein Beispiel für ein Monitoring System ist Icinga. |
 
+### Anwendungsfälle
+
 | Nummer | Beschreibung |
 | ------ | ------------ |
 | 1 | |
