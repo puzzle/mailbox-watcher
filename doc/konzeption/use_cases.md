@@ -9,6 +9,7 @@ Verantwortlicher
 ### Beschreibung
 
 Der Verantwortliche gibt das einmalige Token in der URL mit.
+
 Beispiel: www.mailbox-watcher.ch/token=12345678
 
 ### Vorbereitung
