@@ -16,4 +16,4 @@
 
 ### Use Case Diagramm
 
-[Use Case](https://github.com/puzzle/mailbox-watcher/blob/master/doc/konzeption/use_case_diagram.jpg)
+![Use Case](https://raw.githubusercontent.com/puzzle/mailbox-watcher/master/doc/konzeption//use_case_diagram.jpg)
