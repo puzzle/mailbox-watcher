@@ -6,6 +6,4 @@
 | Akteur | Verantwortlicher, Monitoring System |
 | Auslöser | Der Verantwortliche möchte die Systemmeldungen seines Projektes überprüfen |
 | Ablauf | 1. Aufruf Projekt-Mailbox URL <br/> 2. Prüfung Mails von Projekt-Mailbox |
-| Ergebnisse | * Anzeige Mails pro Subordner bei denen eine Aktion durch den Verantwortlichen erforderlich ist <br/>
-               * Mailserver nicht erreichbar <br/>
-               * Verbindung zur Projekt-Mailbox per IMAP fehlgeschlagen |
+| Ergebnisse | * Anzeige Mails pro Subordner bei denen eine Aktion durch den Verantwortlichen erforderlich ist <br/>               * Mailserver nicht erreichbar <br/> * Verbindung zur Projekt-Mailbox per IMAP fehlgeschlagen |
