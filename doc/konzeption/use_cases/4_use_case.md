@@ -4,7 +4,7 @@
 
 | Beschreibung | Ordnerspezifische Regeln hinzufügen |
 | ------------- | --- |
-| Vorbedingungen | <ul><li> Die Config mit dem Endpoint und dem Postfach ist bereits in einem separatem Projekt vorhanden</li><li>Das Secret File wurde auf OpenShift hinzugefügt</li></ul> |
+| Vorbedingungen | Git Repository für projektspezifische Konfigurationen vorhanden |
 | Auslöser | Der Verantwortliche möchte Ordnerspezifische Regeln hinzufügen |
 | Ablauf | 1. In der Config den IMAP-Subordner und die Regeln (Regex, Dauer) angeben <br/> 2. Projekt neu deployen |
 | Ergebnisse | Ordnerspezifische Regeln wurden hinzugefügt |
@@ -13,7 +13,7 @@
 
 | Beschreibung | Ordnerspezifische Regeln ändern |
 | ------------- | --- |
-| Vorbedingungen | <ul><li> Die Config mit dem Endpoint und dem Postfach ist bereits in einem separatem Projekt vorhanden</li><li>Das Secret File wurde auf OpenShift hinzugefügt</li></ul> |
+| Vorbedingungen | Git Repository für projektspezifische Konfigurationen vorhanden |
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte Ordnerspezifische Regeln ändern |
 | Ablauf | 1. In der Config den IMAP-Subordner und/oder die Regeln (Regex, Dauer) ändern <br/> 2. Projekt neu deployen |
@@ -23,7 +23,7 @@
 
 | Beschreibung | Ordnerspezifische Regeln löschen |
 | ------------- | --- |
-| Vorbedingungen | <ul><li> Die Config mit dem Endpoint und dem Postfach ist bereits in einem separatem Projekt vorhanden</li><li>Das Secret File wurde auf OpenShift hinzugefügt</li></ul> |
+| Vorbedingungen | Git Repository für projektspezifische Konfigurationen vorhanden |
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte Ordnerspezifische Regeln löschen |
 | Ablauf | 1. In der Config den IMAP-Subordner und/oder die Regeln (Regex, Dauer) löschen <br/> 2. Projekt neu deployen |
