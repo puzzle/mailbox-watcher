@@ -8,7 +8,7 @@
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte ein Postfach hinzufügen |
 | Ablauf | 1. Konfiguration erstellen und in Config Repo pushen (Postfach, IMAP-Credentials) <br/> 2. Service neu deployen |
-| Ergebnisse | Postfach wurde hinzugefügt |
+| Ergebnisse | Service wird mit neuer Postfach-Config konfiguriert |
 
 ## Anwendungsfall 3.2:
 
@@ -18,7 +18,7 @@
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte ein Postfach ändern |
 | Ablauf | 1. Konfiguration ändern und in Config Repo pushen <br/> 2. Service neu deployen |
-| Ergebnisse | Postfach wurde geändert |
+| Ergebnisse | Service überprüft ein neues Postfach |
 
 ## Anwendungsfall 3.3:
 
@@ -28,4 +28,4 @@
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte ein Postfach löschen |
 | Ablauf | 1. Konfiguration ändern und in Config Repo pushen <br/> 2. Service neu deployen |
-| Ergebnisse | Postfach wurde gelöscht |
+| Ergebnisse | Postfach-Config wurde gelöscht |
