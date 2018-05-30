@@ -8,7 +8,7 @@
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte Ordnerspezifische Regeln hinzufügen |
 | Ablauf | 1. Konfiguration erstellen und in Config Repo pushen (IMAP-Subordner, Regeln) <br/> 2. Service neu deployen |
-| Ergebnisse | Ordnerspezifische Regeln wurden hinzugefügt |
+| Ergebnisse | Service wird mit neuen Ordnerspezifischen Regeln konfiguriert |
 
 ## Anwendungsfall 4.2:
 
@@ -18,7 +18,7 @@
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte Ordnerspezifische Regeln ändern |
 | Ablauf | 1. Konfiguration ändern und in Config Repo pushen <br/> 2. Service neu deployen |
-| Ergebnisse | Ordnerspezifische Regeln wurden geändert |
+| Ergebnisse | Die konfigurierten Ordnerspezifischen Regeln wurden geändert |
 
 ## Anwendungsfall 4.3:
 
@@ -28,4 +28,4 @@
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte Ordnerspezifische Regeln löschen |
 | Ablauf | 1. Konfiguration löschen und in Config Repo pushen <br/> 2. Service neu deployen |
-| Ergebnisse | Ordnerspezifische Regeln wurden gelöscht |
+| Ergebnisse | Ordnerspezifische Regeln wurden aus der Config gelöscht |
