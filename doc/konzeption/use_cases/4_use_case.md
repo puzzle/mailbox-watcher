@@ -5,8 +5,9 @@
 | Beschreibung | Ordnerspezifische Regeln hinzufügen |
 | ------------- | --- |
 | Vorbedingungen | Git Repository für projektspezifische Konfigurationen vorhanden |
+| Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte Ordnerspezifische Regeln hinzufügen |
-| Ablauf | 1. In der Config den IMAP-Subordner und die Regeln (Regex, Dauer) angeben <br/> 2. Projekt neu deployen |
+| Ablauf | 1. Konfiguration erstellen und in Config Repo pushen (IMAP-Subordner, Regeln) <br/> 2. Service neu deployen |
 | Ergebnisse | Ordnerspezifische Regeln wurden hinzugefügt |
 
 ## Anwendungsfall 4.2:
@@ -16,7 +17,7 @@
 | Vorbedingungen | Git Repository für projektspezifische Konfigurationen vorhanden |
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte Ordnerspezifische Regeln ändern |
-| Ablauf | 1. In der Config den IMAP-Subordner und/oder die Regeln (Regex, Dauer) ändern <br/> 2. Projekt neu deployen |
+| Ablauf | 1. Konfiguration ändern und in Config Repo pushen <br/> 2. Service neu deployen |
 | Ergebnisse | Ordnerspezifische Regeln wurden geändert |
 
 ## Anwendungsfall 4.3:
@@ -26,5 +27,5 @@
 | Vorbedingungen | Git Repository für projektspezifische Konfigurationen vorhanden |
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte Ordnerspezifische Regeln löschen |
-| Ablauf | 1. In der Config den IMAP-Subordner und/oder die Regeln (Regex, Dauer) löschen <br/> 2. Projekt neu deployen |
+| Ablauf | 1. Konfiguration löschen und in Config Repo pushen <br/> 2. Service neu deployen |
 | Ergebnisse | Ordnerspezifische Regeln wurden gelöscht |
