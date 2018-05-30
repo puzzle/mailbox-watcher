@@ -1,6 +1,6 @@
 # Anwendungsfall 1: 
 
-| Beschreibung | Der Benutzer öffnet den Projekt-Endpoint um den Zustand der Mailbox mit Systemmeldungen zu prüfen |
+| Beschreibung | Benutzer öffnet Projekt-Endpoint um den Zustand der Mailbox mit Systemmeldungen zu prüfen |
 | ------------- | --- |
 | Vorbedingung | Die Config ist bereits in einem separatem Projekt vorhanden. Ein gültiges Token wurde in der URL mitgeschickt |
 | Akteur | Verantwortlicher, Monitoring System |
