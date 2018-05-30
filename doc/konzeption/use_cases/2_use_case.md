@@ -7,8 +7,8 @@
 | Vorbedingungen | Git Repository für projektspezifische Konfigurationen vorhanden |
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte ein Projekt hinzufügen |
-| Ablauf | 1. Auf Github ein Repo für die Config erstellen <br/> 2. In der Config den Endpoint des Projektes angeben <br/> 3. Auf OpenShift das Config Repo angeben <br/> 4. Projekt neu deployen |
-| Ergebnisse | Projekt Endpoint wurde erstellt |
+| Ablauf | 1. Konfiguration erstellen und in Config Repo pushen <br/> 2. Service neu deployen |
+| Ergebnisse | Service wird mit neuer Projekt-Config konfiguriert |
 
 ## Anwendungsfall 2.2:
 
@@ -17,8 +17,8 @@
 | Vorbedingungen | Git Repository für projektspezifische Konfigurationen vorhanden |
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte den Endpoint eines Projektes ändern |
-| Ablauf | 1. In der Config den Endpoint des Projektes ändern <br/> 2. Projekt neu deployen |
-| Ergebnisse | Projekt Endpoint wurde geändert |
+| Ablauf | 1. Konfiguration ändern und in Config Repo pushen <br/> 2. Service neu deployen |
+| Ergebnisse | Projekt ist unter einem neuen Endpointnamen erreichbar |
 
 
 ## Anwendungsfall 2.3:
@@ -28,5 +28,5 @@
 | Vorbedingungen | Git Repository für projektspezifische Konfigurationen vorhanden |
 | Akteur | Verantwortlicher |
 | Auslöser | Der Verantwortliche möchte ein Projekt löschen |
-| Ablauf | 1. In der Config den Endpoint des Projektes löschen <br/> 2. Projekt neu deployen |
-| Ergebnisse | Projekt Endpoint wurde gelöscht |
+| Ablauf | 1. Konfiguration löschen und in Config Repo pushen <br/> 2. Service neu deployen |
+| Ergebnisse | Projekt-Config wurde gelöscht |
