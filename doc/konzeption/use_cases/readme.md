@@ -9,7 +9,7 @@
 
 | Nummer | Beschreibung |
 | ------ | ------------ |
-| 1 | Benutzer öffnet Projekt-Endpoint um den Zustand der Mailboxen mit Systemmeldungen zu prüfen |
-| 2 | Projekt verwalten |
-| 3 | Postfach verwalten |
-| 4 | Regeln für spezifischen Ordner verwalten |
+| 1 | [Benutzer öffnet Projekt-Endpoint um den Zustand der Mailboxen mit Systemmeldungen zu prüfen](https://github.com/puzzle/mailbox-watcher/blob/master/doc/konzeption/use_cases/1_use_case.md) |
+| 2 | [Projekt verwalten](https://github.com/puzzle/mailbox-watcher/blob/master/doc/konzeption/use_cases/2_use_case.md) |
+| 3 | [Postfach verwalten](https://github.com/puzzle/mailbox-watcher/blob/master/doc/konzeption/use_cases/3_use_case.md) |
+| 4 | [Regeln für spezifischen Ordner verwalten](https://github.com/puzzle/mailbox-watcher/blob/master/doc/konzeption/use_cases/4_use_case.md) |
