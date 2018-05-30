@@ -9,7 +9,5 @@
 1. Der Benutzer ruft die Seite mit dem Token in der URL auf
 1. Aufruf Projekt-Mailbox URL
 1. Config auslesen
-1. Verbindung zur Mailbox per IMAP aufbauen
-1.
-1.|
+1. Verbindung zur Mailbox per IMAP aufbauen |
 | Ergebnisse | |
