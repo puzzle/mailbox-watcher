@@ -6,4 +6,4 @@
 | Akteur | Verantwortlicher, Monitoring System |
 | Auslöser | Der Verantwortliche möchte den Status der konfigurierten Projekt-Mailboxen überprüfen |
 | Ablauf | 1. Aufruf Projekt-Mailbox URL (z.B. my-mailbox-watcher42/hitobito?token=823892398) <br/> 2. Prüfung Mails von Projekt-Mailbox |
-| Ergebnisse | <ul><li>Erwartet: Generiert Report und zeigt Mails pro Subordner an bei denen eine Aktion durch den Verantwortlichen erforderlich ist</li> <li>Fehler: Mailserver nicht erreichbar</li> <li>Fehler: Verbindung zur Projekt-Mailbox per IMAP fehlgeschlagen</li></ul> |
+| Ergebnisse | <ul><li>Erwartet: Generiert Report und zeigt Mails pro Subordner an bei denen eine Aktion durch den Verantwortlichen erforderlich ist</li> <li>Fehler: Mailserver nicht erreichbar (500)</li> <li>Fehler: Verbindung zur Projekt-Mailbox per IMAP fehlgeschlagen (500)</li><li>Fehler: Projekt-Config existiert nicht (404)</li></ul> |
