@@ -8,15 +8,21 @@
 
 ### Webservice erstellen
 
-Erstelle einen einfachen Webservice à la Hello World.
+Einlesen in Ruby Netzwerk Programmierung: http://www.rubyguides.com/2015/04/ruby-network-programming/
+
+Erstelle einen einfachen Webservice bei dem man mit einem Get-Request eine Antwort à la Hello World erhält.
 
 ### Authentifizierung via Token
 
 Der Benutzer kann sich via Token authentifizieren. Dieses Token ist einmalig und in einem Secret File im Container hinterlegt.
+das Token wird bei jedem Request in der URL mitgeschickt. Die Applikation prüft ob das mitgegebene Token gleich ist wie die vorhandene Umgebungsvariable.
+Wenn das Token nicht stimmt wird eine Fehlermeldung angezeigt und der Zugriff verweigert.
 
 ### IMAP Komponente bauen
 
 Die Applikation soll sich per IMAP mit einer Mailbox verbinden können. Dazu muss ein IMAP Connector gebaut werden.
+Falls der Verbindungsaufbau fehlschlägt, soll eine Fehlermeldung erstellt werden.
+
 
 ### Einstellungen aus Config File auslesen (Dauer, Regex, Postfach/Postfächer, Endpoint/Endpoints, IMAP-Subordner)
 
@@ -47,3 +53,5 @@ Die Error- / Statusmeldungen sollen per JSON formatiert werden.
 ### Simples UI mit Javascript
 
 Der User soll über ein Simples Interface die verschiedenen Projekte mit den aufgelisteten Fehlermeldungen sehen können.
+Auf der Hauptseite sind alle Projekte aufgelistet. Wenn man auf ein Projekt klickt kommt man auf den Endpoint des Projektes zB. /hitobito
+Von den Statusmeldungen werden nur die Fehlermeldungen angezeigt.
