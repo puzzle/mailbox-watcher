@@ -53,5 +53,6 @@ Die Error- / Statusmeldungen sollen per JSON formatiert werden.
 ### Simples UI mit Javascript
 
 Der User soll über ein Simples Interface die verschiedenen Projekte mit den aufgelisteten Fehlermeldungen sehen können.
-Auf der Hauptseite sind alle Projekte aufgelistet. Wenn man auf ein Projekt klickt kommt man auf den Endpoint des Projektes zB. /hitobito
+
+Auf der Hauptseite sind alle Projekte aufgelistet. Die Projekte werden aus der Config welche sich in einem separaten Git Repo befindet, ausgelesen. Wenn man auf ein Projekt klickt kommt man auf den Endpoint des Projektes zB. /hitobito
 Von den Statusmeldungen werden nur die Fehlermeldungen angezeigt.
