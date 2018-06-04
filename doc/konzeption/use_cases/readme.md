@@ -13,7 +13,3 @@
 | 2 | [Projekt verwalten](https://github.com/puzzle/mailbox-watcher/blob/master/doc/konzeption/use_cases/2_use_case.md) |
 | 3 | [Postfach verwalten](https://github.com/puzzle/mailbox-watcher/blob/master/doc/konzeption/use_cases/3_use_case.md) |
 | 4 | [Regeln für spezifischen Ordner verwalten](https://github.com/puzzle/mailbox-watcher/blob/master/doc/konzeption/use_cases/4_use_case.md) |
-
-### Use Case Diagramm
-
-![Use Case](https://raw.githubusercontent.com/puzzle/mailbox-watcher/master/doc/konzeption//use_case_diagram.jpg)
