@@ -41,15 +41,7 @@ Zudem soll noch ein Mockup für den Report gemacht werden.
 
 **Proof of Concept**
 
-Es soll ein 1. Versuch erstellt werden. (Webservice, IMAP, Config auslesen)
-
-https://rack.github.io/
-
-Einlesen in Ruby Netzwerk Programmierung:
-
-https://www.tutorialspoint.com/ruby/ruby_socket_programming.htm
-
-http://www.rubyguides.com/2015/04/ruby-network-programming/
+Mit dem PoC soll sichergestellt werden das die Software wie konzipiert umgesetzt werden kann. Ausserdem soll mit diesem Schritt definiert werden welche Gems (Ruby Libraries) für die Umsetzung verwendet werden soll.
 
 ### Realisierung
 
