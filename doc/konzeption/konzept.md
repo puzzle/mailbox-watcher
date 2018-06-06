@@ -24,11 +24,15 @@ Ein Zeitplan soll erstellt werden. Auf dem Zeitplan werden die Phasen und Aktivi
 
 **Aktivitätsdiagramm**
 
+Ein Aktivitätsdiagramm für die Abbildung des Workflows der Applikation soll erstellt werden.
+
 **Use Cases**
+
+Sämtliche Use Cases werden dokumentiert. Auch die Fehlerfälle sollen festgehalten werden.
 
 **Config Konzept**
 
-**
+Ein Konzept für die Config soll gemacht werden. Man muss sehen können, wie man eine Config für ein Projekt erstellen kann.
 
 **Report Konzept**
 
@@ -42,7 +46,9 @@ Es soll ein 1. Versuch erstellt werden. (Webservice, IMAP, Config auslesen)
 https://rack.github.io/
 
 Einlesen in Ruby Netzwerk Programmierung:
+
 https://www.tutorialspoint.com/ruby/ruby_socket_programming.htm
+
 http://www.rubyguides.com/2015/04/ruby-network-programming/
 
 ### Realisierung
