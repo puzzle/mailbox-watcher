@@ -103,6 +103,10 @@ Von den Statusmeldungen werden nur die Fehlermeldungen angezeigt.
 
 ### Einführung
 
+**Readme**
+
+Ein Readme mit kurzer Beschreibung, Installationsanleitung und Feature-Auflistung soll geschrieben werden.
+
 **Betrieb auf OpenShift**
 
 Die Applikation soll schliesslich auf OpenShift betrieben werden.
