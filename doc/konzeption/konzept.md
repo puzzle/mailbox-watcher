@@ -41,7 +41,7 @@ Zudem soll noch ein Mockup für den Report gemacht werden.
 
 **Proof of Concept**
 
-Mit dem PoC soll sichergestellt werden das die Software wie konzipiert umgesetzt werden kann. Ausserdem soll mit diesem Schritt definiert werden welche Gems (Ruby Libraries) für die Umsetzung verwendet werden soll.
+Mit dem PoC soll sichergestellt werden das die Applikation wie konzipiert umgesetzt werden kann. Ausserdem soll mit diesem Schritt definiert werden welche Gems (Ruby Libraries) für die Umsetzung verwendet werden sollen.
 
 ### Realisierung
 
