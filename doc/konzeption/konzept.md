@@ -8,7 +8,27 @@
 
 ### Initialisierung
 
+**Aufgabenstellung**
+
+Schreibe eine detaillierte Aufgabenstellung. Dazu gehören Titel, Thematik, Ausgangslage, funktionale und nicht funktionale Anforderungen sowie die Mittel und Methoden.
+
+**Stories erstellen und beschreiben**
+
+Auf dem Open Project sollen die Tickets erstellt und beschrieben werden.
+
+**Zeitplan**
+
+Ein Zeitplan soll erstellt werden. Auf dem Zeitplan werden die Phasen und Aktivitäten abgebildet.
+
 ### Konzept
+
+**Aktivitätsdiagramm**
+
+**Use Cases**
+
+**Config Konzept**
+
+**
 
 **Report Konzept**
 
@@ -24,8 +44,6 @@ https://rack.github.io/
 Einlesen in Ruby Netzwerk Programmierung:
 https://www.tutorialspoint.com/ruby/ruby_socket_programming.htm
 http://www.rubyguides.com/2015/04/ruby-network-programming/
-
-### Einführung
 
 ### Realisierung
 
@@ -43,7 +61,6 @@ Wenn das Token nicht stimmt wird eine Fehlermeldung angezeigt und der Zugriff ve
 
 Die Applikation soll sich per IMAP mit einer Mailbox verbinden können. Dazu muss ein IMAP Connector gebaut werden.
 Falls der Verbindungsaufbau fehlschlägt, soll eine Fehlermeldung erstellt werden.
-
 
 **Einstellungen aus Config File auslesen (Dauer, Regex, Postfach/Postfächer, Endpoint/Endpoints, IMAP-Subordner)**
 
@@ -77,3 +94,11 @@ Der User soll über ein Simples Interface die verschiedenen Projekte mit den auf
 
 Auf der Hauptseite sind alle Projekte aufgelistet. Die Projekte werden aus der Config welche sich in einem separaten Git Repo befindet, ausgelesen. Wenn man auf ein Projekt klickt kommt man auf den Endpoint des Projektes zB. /hitobito
 Von den Statusmeldungen werden nur die Fehlermeldungen angezeigt.
+
+### Einführung
+
+**Betrieb auf OpenShift**
+
+Die Applikation soll schliesslich auf OpenShift betrieben werden.
+Dazu muss das Projekt aufgesetzt werden und in dem Configuration File muss alles konfiguriert werden.
+Am Schluss muss die Applikation in einem Container laufen.
