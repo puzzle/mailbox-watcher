@@ -10,13 +10,13 @@ Webservice für das Monitoring von IMAP-Postfächern
 
 ## Ausgangslage
 
-Momentan gibt es eine riesige Menge an System-Mails von mehreren Projekten welche den Verantwortlichen gesendet werden. z.B. Backup Reports oder Service Monitoring Notifications. Es gibt sehr viele Benachrichtigungen von verschiedenen Diensten, bei denen man nicht sicher ist, ob jemand schon darauf reagiert hat und was der aktuelle Stand davon ist. Backup-Reports sollten täglich ankommen, fällt ein Backup aus und es werden keine Nachrichten mehr gesendet, fällt das heute selten bis gar nicht auf.
+Momentan gibt es eine riesige Menge an System-Mails von mehreren Projekten welche den Verantwortlichen gesendet werden. Beispielsweise Backup Reports oder Service Monitoring Notifications. Es gibt sehr viele Benachrichtigungen von verschiedenen Diensten, bei denen man sich nicht sicher ist, ob schon jemand darauf reagiert hat und was der aktuelle Stand davon ist. Backup-Reports sollten täglich ankommen, fällt ein Backup aus und es werden keine Nachrichten mehr gesendet, fällt das heute selten bis gar nicht auf.
 
 ![Project](https://raw.githubusercontent.com/puzzle/mailbox-watcher/master/doc/konzeption/project.jpg)
 
 ## Detaillierte Aufgabenstellung
 
-Es soll nun eine webbasierte Mailbox Monitoring Applikation entwickelt werden, welche die vorhandenen Mails von verschiedenen Projekt-Mailboxen nach spezifischen Regeln prüft. Beim Aufruf der der Projekt-Mailbox URL wird das/werden die Postfächer geprüft und es wird ein Bericht zurück gegeben.  
+Es soll nun eine webbasierte Mailbox Monitoring Applikation entwickelt werden, welche die vorhandenen Mails von verschiedenen Projekt-Mailboxen nach spezifischen Regeln prüft. Beim Aufruf der der Projekt-Mailbox URL wird das/werden die Postfächer geprüft und es wird ein Bericht zurückgegeben.  
 
 ## Funktionale Anforderungen
 
