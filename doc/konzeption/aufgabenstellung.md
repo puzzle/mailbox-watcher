@@ -20,7 +20,7 @@ Es soll nun eine webbasierte Mailbox Monitoring Applikation entwickelt werden, w
 
 ## Funktionale Anforderungen
 
-* Es sollen mehrere IMAP Konten sowie deren Subfolder geprüft werden können
+* Es sollen mehrere IMAP-Postfächer sowie deren Subfolder geprüft werden können
 * Regeln können für jeden Folder definiert werden
 * Es wird ein Report im JSON Format zurück gegeben
 * HTTP Status Codes: 200 OK oder bei Alerts 500
