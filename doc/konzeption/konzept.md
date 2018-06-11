@@ -20,7 +20,7 @@ Auf dem Open Project sollen die Tickets erstellt und beschrieben werden.
 
 Ein Zeitplan soll erstellt werden. Auf dem Zeitplan werden die Phasen und Aktivitäten abgebildet.
 
-### Konzept
+### Konzeption
 
 **Aktivitätsdiagramm**
 
