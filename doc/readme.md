@@ -21,12 +21,13 @@
 
 ### 2 Konzeption
 
-* 2.1 Konzept
-    * 2.1.1 Phasen
-    * 2.1.2 Arbeitsschritte
-* 2.2 Anwendungsfälle
-    * 2.2.1 Anwendungsfall 1
-    * 2.2.2 Anwendungsfall 2
-    * 2.2.3 Anwendungsfall 3
-    * 2.2.4 Anwendungsfall 4
-* 2.3 Aktivitätendiagramm
+* 2.0 Konzept
+    * 2.0.1 Phasen
+    * 2.0.2 Arbeitsschritte
+* 2.1 Anwendungsfälle
+    * 2.1.1 Anwendungsfall 1
+    * 2.1.2 Anwendungsfall 2
+    * 2.1.3 Anwendungsfall 3
+    * 2.1.4 Anwendungsfall 4
+* 2.2 Aktivitätendiagramm
+* 2.3 Config Konzept
