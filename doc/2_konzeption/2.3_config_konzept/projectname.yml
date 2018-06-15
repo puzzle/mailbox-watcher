@@ -1,0 +1,13 @@
+projectname: Projectname
+mailboxes:
+  mailbox: imap.mail.ch
+    subfolder:
+      name: production
+      description: this is the description
+      duration: 2
+      regex: /(Error|Failure)/
+    subfolder:
+      name: integration
+      description: this is the description
+      duration: 12
+      regex: /(Error|Failure)/
