@@ -35,3 +35,6 @@
     * 2.3.2 [Beispiel Config](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.3_config_konzept/projectname.yml)
     * 2.3.3 [Secret File Konzept](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.3_config_konzept/2.3.3_secret_file_konzept.md)
     * 2.3.4 [Beispiel Secret File](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.3_config_konzept/secret.yml)
+* 2.4 [Report](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.4_report_konzept.md)
+    * 2.4.1 JSON Datenstruktur
+    * 2.4.2 Report Mockups
