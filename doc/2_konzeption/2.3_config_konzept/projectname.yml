@@ -1,17 +1,18 @@
 projectname: Projectname
+description: This is the project description
 mailboxes:
-  mailbox: 
+  mailbox42: 
     label: Mailbox42
     subfolders:
-      subfolder:
+      production:
         name: production
         description: this is the description
         max-age: 2
-      subfolder:
+      integration:
         name: integration
         description: this is the description
         regex: /(Error|Failure)/
-      subfolder:
+      development:
         name: development
         description: this is the description
         max-age : 12
