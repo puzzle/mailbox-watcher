@@ -1,19 +1,15 @@
-projectname: Projectname42
-description: This is the project description
+description: Including production and integration environments
 mailboxes:
-  mailbox42: 
-    label: Mailbox42
-    subfolders:
-      production:
-        name: production
-        description: this is the description
-        max-age: 2
-      integration:
-        name: integration
-        description: this is the description
-        regex: /(Error|Failure)/
-      development:
-        name: development
-        description: this is the description
-        max-age : 12
-        regex: /(Error|Failure)/
+  mailbox-ops:
+    description: Mailbox for system notifications
+    folders:
+      inbox:
+        description: default folder
+        alert_regex: /(Error|Failure)/
+      backup:
+        description: messages from integration environment
+        alert_regex: /(Error)/
+        max-age : 1
+      monitoring:
+        description: icinga notifications
+        alert_regex: /(Error|Failure)/
