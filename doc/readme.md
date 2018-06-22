@@ -37,4 +37,5 @@
     * 2.3.4 [Beispiel Secret File](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.3_config_konzept/secret.yml)
 * 2.4 [Report](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.4_report_konzept.md)
     * 2.4.1 JSON Datenstruktur
-    * 2.4.2 Report Mockups
+    * 2.4.2 Beispiel JSON
+    * 2.4.3 Report Mockups
