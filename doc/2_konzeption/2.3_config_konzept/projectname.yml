@@ -9,7 +9,7 @@ mailboxes:
       backup:
         description: messages from integration environment
         alert-regex: /(Error)/
-        max-age : 1
+        max-age: 1
       monitoring:
         description: icinga notifications
         alert-regex: /(Error|Failure)/
