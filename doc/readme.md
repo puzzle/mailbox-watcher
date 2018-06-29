@@ -39,3 +39,5 @@
     * 2.4.1 JSON Datenstruktur
     * 2.4.2 Beispiel JSON
     * 2.4.3 Report Mockups
+* 2.5 [Klassendiagramm](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.5_klassendiagramm.md)
+* 2.6 [Systemübersicht](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.6_systemübersicht.md)
