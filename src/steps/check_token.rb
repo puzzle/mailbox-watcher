@@ -1,0 +1,3 @@
+class Steps::CheckToken
+
+end

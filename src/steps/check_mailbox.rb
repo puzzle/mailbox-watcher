@@ -1,0 +1,3 @@
+class Steps::CheckMailbox
+
+end
