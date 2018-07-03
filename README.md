@@ -63,8 +63,8 @@ $ bundle install
 
 ### Start server
 
-```puma```
+```$ puma```
 
 ### Run tests
 
-```rake test```
+```$ rake test```
