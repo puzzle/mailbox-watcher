@@ -68,3 +68,7 @@ $ bundle install
 ### Run tests
 
 ```$ rake test```
+
+### Run rubocop
+
+```$ rubocop -R```
