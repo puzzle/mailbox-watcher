@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'yaml'
 require 'sinatra'
 
 class App < Sinatra::Base
-
   # start server: puma
 
   get '/test-config' do

@@ -1,16 +1,15 @@
+# frozen_string_literal: true
+
 require 'net/imap'
 
 class ImapConnector
-
   def initialize(username, password, hostname, port = 143, ssl = nil)
     @username = username
     @password = password
-    @imap = Net::IMAP.new(hostname, {port: port, ssl: ssl})
+    @imap = Net::IMAP.new(hostname, port: port, ssl: ssl)
   end
 
-  def authenticate
-
-  end
+  def authenticate; end
 
   private
 
