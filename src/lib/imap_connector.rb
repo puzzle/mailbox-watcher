@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'net/imap'
+require_relative 'locales_helper'
 
 class ImapConnector
   attr_reader :errors
@@ -29,7 +30,7 @@ class ImapConnector
 
     if latest_mail_date > date
       hours = latest_mail_age_in_hours(latest_mail_date)
-      errors << ('Latest mail older than ' + hours.to_s + ' hours')
+      errors << t('error_messages.latest_mail_to_old', hours: hours)
       return true
     end
     false
@@ -50,7 +51,7 @@ class ImapConnector
     imap.starttls({}, true) if @ssl
     authenticate
   rescue SocketError
-    errors << 'server not reachable'
+    errors << t('error_messages.server_not_reachable', hostname: @hostname)
     false
   end
 

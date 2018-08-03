@@ -1,0 +1,4 @@
+description: This is a project-description
+mailboxes:
+  mailbox1:
+    description: This is a mailbox-description

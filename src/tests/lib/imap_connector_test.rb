@@ -11,7 +11,7 @@ class ImapConnectorTest < Test::Unit::TestCase
                .raises(SocketError)
 
       imap_connector.mails_from_folder('inbox')      
-      assert_equal 'server not reachable', imap_connector.errors.first
+      assert_equal 'IMAP-server hostname.example.com not reachable', imap_connector.errors.first
     end
 
     def test_does_not_return_mails_if_authentication_failed
@@ -62,7 +62,7 @@ class ImapConnectorTest < Test::Unit::TestCase
 
       time = Time.new(2018, 7, 31, 13)
       imap_connector.latest_mail_older_than?('inbox', time)
-      assert_equal 'server not reachable', imap_connector.errors.first
+      assert_equal 'IMAP-server hostname.example.com not reachable', imap_connector.errors.first
     end
 
     def test_does_not_return_latest_mail_older_than_if_authentication_failed

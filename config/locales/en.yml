@@ -1,0 +1,9 @@
+en:
+  error_messages:
+    file_does_not_exist: "File %{filename} does not exist"
+    rules_not_valid: "Rules in folder %{folder} are not valid"
+    mailboxes_not_valid: "Mailboxes in project %{project} are not valid"
+    folders_not_valid: "Folders in mailbox %{mailbox} are not valid"
+    server_not_reachable: "IMAP-server %{hostname} not reachable"
+    latest_mail_to_old: "Latest mail older than %{hours} hours"
+    option_not_defined: "%{option} is not defined in %{mailbox} mailbox options"
