@@ -8,5 +8,5 @@ task default: %w[test]
 
 Rake::TestTask.new do |t|
   t.libs << 'test'
-  t.test_files = FileList['src/tests/*test.rb']
+  t.test_files = FileList['src/tests/**/*test.rb']
 end
