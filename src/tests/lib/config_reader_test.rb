@@ -125,10 +125,10 @@ class ConfigReaderTest < Test::Unit::TestCase
       config_reader.expects(:yaml_path).returns('src/tests/fixtures/secrets/valid_secret_file.yml')
 
       imap_config = {'hostname'=> 'hostname.example.com',
-                     'password'=> 'password',
+                     'password'=> 'cGFzc3dvcmQ=\n',
                      'port'=> 144,
                      'tls'=> 'start_tls',
-                     'username'=> 'user'}
+                     'username'=> 'dXNlcg==\n'}
 
       assert_equal true, config_reader.validate_secret_file
       assert_equal imap_config, config_reader.imap_config('mailbox1')
