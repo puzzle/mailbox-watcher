@@ -12,4 +12,4 @@ mailboxes:
         max-age: 1
       monitoring:
         description: icinga notifications
-        alert-regex: /(Error|Failure)/
+        max-age: 12
