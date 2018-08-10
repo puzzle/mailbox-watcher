@@ -1,0 +1,26 @@
+AllCops:
+  DisplayCopNames: true
+
+Metrics/AbcSize:
+  Exclude:
+    - src/tests/**/*
+
+Metrics/MethodLength:
+  Exclude:
+    - src/tests/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - src/tests/**/*
+
+Metrics/ClassLength:
+  Exclude:
+    - src/tests/**/*
+
+Style/Documentation:
+  Exclude:
+    - src/**/*
+
+Rails/TimeZone:
+  Exclude:
+    - src/tests/**/*
