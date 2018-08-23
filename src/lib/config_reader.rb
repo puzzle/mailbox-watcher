@@ -2,136 +2,131 @@
 
 require 'yaml'
 require_relative 'locales_helper'
+require_relative '../models/project'
+require_relative '../models/mailbox'
+require_relative '../models/imap_config'
+require_relative '../models/folder'
 
 class ConfigReader
-  attr_reader :projectname, :errors
+  attr_reader :errors
 
-  def initialize(projectname)
-    @projectname = projectname
+  def initialize
     @errors = []
   end
 
-  def validate_config_file
-    file_present?('config')
-    config_file_valid?
-  rescue RuntimeError => error
-    errors << error.message
-    false
-  end
-
-  def validate_secret_file
-    file_present?('secrets')
-    secret_file_valid?
-  rescue RuntimeError => error
-    errors << error.message
-    false
-  end
-
-  def project_description
-    config_file['description']
-  end
-
-  def mailbox_description(mailboxname)
-    config_file['mailboxes'][mailboxname]['description']
-  end
-
-  def folder_description(mailboxname, foldername)
-    config_file['mailboxes'][mailboxname]['folders'][foldername]['description']
-  end
-
-  def alert_regex(mailboxname, foldername)
-    config_file['mailboxes'][mailboxname]['folders'][foldername]['alert-regex']
-  end
-
-  def max_age(mailboxname, foldername)
-    config_file['mailboxes'][mailboxname]['folders'][foldername]['max-age']
-  end
-
-  def imap_config(mailboxname)
-    secret_file['mailboxes'][mailboxname]
+  def projects
+    projectnames.collect do |projectname|
+      filepath = "#{base_path}/config/#{projectname.downcase}.yml"
+      @config_file = load_file(filepath)
+      next unless secret_file_present?(projectname)
+      create_project(projectname)
+    end
   end
 
   private
 
-  def file_present?(type)
-    file_path = yaml_path(type)
-
-    if File.exist?(file_path)
-      if type == 'config'
-        @config_file = load_file(file_path)
-      else
-        @secret_file = load_file(file_path)
-      end
-      return true
+  def projectnames
+    filenames = Dir.glob(['config/*.yml'])
+    filenames.collect do |filename|
+      File.basename(filename, '.yml')
     end
-
-    raise(t('error_messages.file_does_not_exist', filename: file_path))
   end
 
-  def base_path
-    File.expand_path('../../../', __FILE__)
+  def project_description
+    config_file.dig('description')
   end
 
-  def yaml_path(type)
-    "#{base_path}/#{type}/#{projectname.downcase}.yml"
+  def mailbox_description(mailboxname)
+    config_file.dig('mailboxes', mailboxname, 'description')
   end
 
-  def load_file(filename)
-    YAML.load_file(filename)
+  def folder_description(mailboxname, foldername)
+    config_file.dig('mailboxes', mailboxname, 'folders', foldername, 'description')
   end
 
-  def config_file_valid?
-    mailboxes.each do |mailbox|
-      folders(mailbox).each do |folder|
-        rules_valid = alert_regex(mailbox, folder).is_a?(String) || max_age(mailbox, folder).is_a?(Integer)
-        raise(t('error_messages.rules_not_valid', folder: folder)) unless rules_valid
-      end
-    end
-    true
-  rescue RuntimeError => error
-    errors << error.message
-    false
+  def alert_regex(mailboxname, foldername)
+    config_file.dig('mailboxes', mailboxname, 'folders', foldername, 'alert-regex')
   end
 
-  def secret_file_valid?
-    mailboxes.each do |mailbox|
-      return false if options_errors(mailbox).any?
-    end
-    true
-  rescue RuntimeError => error
-    errors << error.message
-    false
+  def max_age(mailboxname, foldername)
+    config_file.dig('mailboxes', mailboxname, 'folders', foldername, 'max-age')
   end
-  
-  def options_errors(mailboxname)
-    ['hostname', 'username', 'password'].each do |option|
-      value = secret_file['mailboxes'][mailboxname][option]
-      unless value.is_a?(String)
-        errors << t('error_messages.option_not_defined', {option: option.capitalize, mailbox: mailboxname})
-      end
-    end
-    errors
+
+  def imap_config(mailboxname)
+    secret_file.dig('mailboxes', mailboxname)
   end
 
   def mailboxes
-    raise if mailbox_names.empty?
-    mailbox_names
-  rescue StandardError
-    raise(t('error_messages.mailboxes_not_valid', project: projectname))
+    mailboxes = config_file.dig('mailboxes')
+    mailboxes.keys if mailboxes
   end
 
-  def mailbox_names
-    file = config_file.nil? ? secret_file : config_file
-    file['mailboxes'].keys
+  def folders(mailboxname)
+    folders = config_file.dig('mailboxes', mailboxname, 'folders')
+    folders.keys if folders
   end
 
-  def folders(mailbox)
-    folders = config_file['mailboxes'][mailbox]['folders'].keys
-    raise if folders.empty?
-    folders
-  rescue StandardError
-    raise(t('error_messages.folders_not_valid', mailbox: mailbox))
+  def create_project(projectname)
+    Project.new(projectname, project_description, create_mailboxes)
   end
-  
+
+  def create_mailboxes
+    return [] unless mailboxes
+
+    mailboxes.collect do |mailboxname|
+      description = mailbox_description(mailboxname)
+      folders = create_folders(mailboxname)
+      imap_config = create_imap_config(mailboxname)
+      Mailbox.new(mailboxname, description, folders, imap_config)
+    end
+  end
+
+  def create_imap_config(mailboxname)
+    imap_config = imap_config(mailboxname)
+    ImapConfig.new(mailboxname: mailboxname,
+                   username: imap_config['username'],
+                   password: imap_config['password'],
+                   hostname: imap_config['hostname'],
+                   port: imap_config['port'],
+                   ssl: imap_config['ssl'])
+  rescue StandardError
+    nil
+  end
+
+  def create_folders(mailboxname)
+    return [] unless folders(mailboxname)
+
+    folders(mailboxname).collect do |foldername|
+      description = folder_description(mailboxname, foldername)
+      max_age = max_age(mailboxname, foldername)
+      alert_regex = alert_regex(mailboxname, foldername)
+      Folder.new(foldername, description, max_age, alert_regex)
+    end
+  end
+
+  def secret_file_present?(projectname)
+    file_path = yaml_path(projectname)
+
+    if File.exist?(file_path)
+      @secret_file = load_file(file_path)
+      return true
+    end
+    errors << t('error_messages.secret_file_does_not_exist',
+                projectname: projectname)
+    false
+  end
+
+  def yaml_path(projectname)
+    "#{base_path}/secrets/#{projectname.downcase}.yml"
+  end
+
+  def base_path
+    File.expand_path('../..', __dir__)
+  end
+
+  def load_file(file_path)
+    YAML.load_file(file_path)
+  end
+
   attr_reader :config_file, :secret_file
 end
