@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-dss
+class Report; end
