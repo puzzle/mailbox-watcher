@@ -1,0 +1,8 @@
+description: This is a project-description
+mailboxes:
+  mailbox1:
+    description: This is a mailbox-description
+    folders:
+      folder1:
+        description: This is a folder-description
+        alert-regex: /(Error|Failure)/

@@ -1,0 +1,15 @@
+en:
+  error_messages:
+    secret_file_does_not_exist: "Secret-File for project %{projectname} does not exist"
+    rules_not_valid: "Rules in folder %{folder} are not valid"
+    mailboxes_not_valid: "Mailboxes in project %{project} are not valid"
+    folders_not_valid: "Folders in mailbox %{mailbox} are not valid"
+    server_not_reachable: "IMAP-Server %{hostname} not reachable"
+    latest_mail_to_old: "Latest mail older than %{hours} hours"
+    option_not_defined: "%{option} is not defined in %{mailbox} mailbox options"
+    mailbox_not_defined_in_secret_file: "Mailbox %{mailbox} is not defined in Secret-File"
+    mail_does_not_exist: "Mail does not exist"
+    regex_matches_with_subject: "Alert regex %{alert_regex} matches with a mail in folder %{folder}"
+    project_config_not_found: "Config for project %{projectname} not found"
+    authentication_failed: "Authentication with invalid token failed"
+    no_project_configs_existing: "There are no project config files existing."
