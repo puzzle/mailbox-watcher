@@ -19,8 +19,7 @@
       %div{class: "#{mailbox[:status]}"}
         %h2.mailbox-title.title #{mailbox[:name]}
         %a.btn-collapse{'aria-controls': "collapse_#{id}", 'aria-expanded': 'false', 'data-toggle': 'collapse', href: "#collapse_#{id}", role: 'button', onclick: 'changeIcon(event);'}
-          %p
-            %span#collapse-icon.glyphicon.glyphicon-chevron-left
+          %span#collapse-icon.glyphicon.glyphicon-chevron-left
             
       %div{class: 'collapse multi-collapse', id: "collapse_#{id}"}
         %div.card.card-body

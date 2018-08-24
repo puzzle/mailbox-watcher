@@ -2,7 +2,7 @@
 
 require 'yaml'
 require 'sinatra'
-require 'sinatra/flash'
+# require 'sinatra/flash'
 require 'json'
 require 'haml'
 require_relative 'lib/imap_connector'
@@ -30,12 +30,7 @@ class App < Sinatra::Base
     g = GenerateReport.new(project)
     g.execute
 
-    return 200, 'test'
-  end
-  
-  get '/flash-message' do
-    flash[:danger] = 'This is an error'
-    @projectnames = ['projectname']
+  #  flash[:danger] = 'This is an error'
     haml :index
   end
 
