@@ -20,14 +20,17 @@ body {
   padding-bottom: 0.3%;
 }
 
+.mailbox-header {
+  border-bottom: 2px black solid;
+}
+
 .ok {
-  border: 2px black solid;
-  background-color: #28a745;
+  background-color: #51bf90;
+  box-shadow: 1px 1px 5px #888888;
 }
 
 .error {
-  border: 2px black solid;
-  background-color: #dc3545;
+  background-color: #db5555;
 }
 
 table {
@@ -51,12 +54,20 @@ td {
   padding: 0;
   margin: 2% 0 2% 0;
   border: 2px black solid;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #888888;
 }
 
 .folder {
   padding: 0;
   margin: 2%;
   border: 2px black solid;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #888888;
+}
+
+.folder-title {
+  border-bottom: 2px black solid;
 }
 
 .foldercontent {
@@ -71,14 +82,29 @@ td {
   margin-top: 1%;
 }
 
+.rules-title {
+  padding-bottom: 7px;
+}
+
+.description-title {
+  padding-bottom: 7px;
+}
+
+.mails-with-alerts-title {
+  padding-top: 10px;
+}
+
 .rule {
   border: 2px black solid;
+  border-radius: 5px;
   background-color: #f8f9fa;
   display: inline-block;
   padding: 0.2%;
+  box-shadow: 1px 1px 5px #888888;
 }
 
 #projectname {
+  color: #0bacd3;
   margin: 0;
   display: inline-block;
 }
@@ -142,15 +168,37 @@ td {
 
 .btn-collapse {
   float: right;
+  margin-top: 0.1em;
   margin-right: 2em;
   font-size: 20px;
   color: #333333;
   font-weight: bold;
 }
 
-
 .btn-collapse:hover, .btn-collapse:visited, .btn-collapse:focus {
   text-decoration: none;
   outline: 0;
   color: black;
+}
+
+.mails-table {
+  border-collapse: separate;
+  border: 2px black solid;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #888888;
+  margin-bottom: 10px;
+}
+
+.mails-table th, .mails-table td {
+  padding-left: 10px;
+}
+
+#project-description {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.alerts {
+  box-shadow: 0.5px 0.5px 2px #888888;
+  border-radius: 3px;
 }

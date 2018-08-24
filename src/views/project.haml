@@ -13,10 +13,10 @@
       %a.btn#btn-home{href: "/test-homepage/#{@token}", role: 'button'}
         %p Home
   - if @project_data[:description]
-    %p #{@project_data[:description]}
+    %p#project-description #{@project_data[:description]}
   - @project_data[:mailboxes].each_with_index do |mailbox, id|
     %div.mailbox
-      %div{class: "#{mailbox[:status]}"}
+      %div.mailbox-header{class: "#{mailbox[:status]}"}
         %h2.mailbox-title.title #{mailbox[:name]}
         %a.btn-collapse{'aria-controls': "collapse_#{id}", 'aria-expanded': 'false', 'data-toggle': 'collapse', href: "#collapse_#{id}", role: 'button', onclick: 'changeIcon(event);'}
           %span#collapse-icon.glyphicon.glyphicon-chevron-left
@@ -25,27 +25,27 @@
         %div.card.card-body
           - mailbox[:folders].each do |folder|
             %div.folder
-              %h3{ :class => "title " + (folder[:alerts].empty? && folder[:"alert-mails"].empty? ? "ok" : "error") } #{folder[:name]} (#{folder[:"number-of-mails"]})
+              %h3.folder-title.title{ :class => (folder[:alerts].empty? && folder[:"alert-mails"].empty? ? "ok" : "error") } #{folder[:name]} (#{folder[:"number-of-mails"]})
               %div.foldercontent
                 %div
-                  %h4 Rules
+                  %h4.rules-title Rules
                   - if folder[:"max-age"]
                     %p.rule= 'max-age: ' + (folder[:"max-age"].to_i < 24 ? "#{folder[:"max-age"]}h" : (folder[:"max-age"] / 24).to_i.to_s + 'd')
                   - if folder[:"alert-regex"]
                     %p.rule alert-regex: #{folder[:"alert-regex"]}
                 - if folder[:description]
                   %div
-                    %h4 Description
+                    %h4.description-title Description
                     %p #{folder[:description]}
                 - if folder[:alerts].any?
                   %div
                     %h4 Alerts
                     - folder[:alerts].each do |alert|
-                      %div.error
+                      %div.error.alerts
                         %p #{alert}
                 - if folder[:"alert-mails"].any?
-                  %h4 Mails with alerts
-                  %table
+                  %h4.mails-with-alerts-title Mails with alerts
+                  %table.mails-table
                     %tbody
                       %tr
                         %th Subject
