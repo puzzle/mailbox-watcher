@@ -1,57 +1,63 @@
 # frozen_string_literal: true
 
 require 'net/imap'
+require 'base64'
 require_relative 'locales_helper'
 
 class ImapConnector
   attr_reader :errors
 
-  def initialize(username:, password:, hostname:, port: 143, ssl: false)
-    @username = username
-    @password = password
+  def initialize(imap_config)
+    @imap_config = imap_config
     @errors = []
-    @hostname = hostname
-    @port = port
-    @ssl = ssl
   end
 
   def mails_from_folder(foldername)
     return unless connect
+
     imap.select(foldername)
     imap.search(['ALL'])
   rescue Net::IMAP::Error => error
     errors << error.message
+    return
   end
 
-  # integrate this method in a step
-  def latest_mail_older_than?(foldername, date)
+  def mail(foldername, id)
     return unless connect
-    latest_mail_date = most_recent_mail_date(foldername)
 
-    if latest_mail_date > date
-      hours = latest_mail_age_in_hours(latest_mail_date)
-      errors << t('error_messages.latest_mail_to_old', hours: hours)
-      return true
-    end
-    false
+    imap.select(foldername)
+    imap.fetch(id, 'ENVELOPE').first.attr['ENVELOPE']
   rescue Net::IMAP::Error => error
+    if error.message.include? 'No matching messages'
+      errors << t('error_messages.mail_does_not_exist')
+      return
+    end
     errors << error.message
+    return
   end
 
   def most_recent_mail_date(foldername)
+    return unless connect
+
     imap.select(foldername)
     mail_id = imap.search(['ALL']).last
-    extract_date(mail_id)
+    extract_date(foldername, mail_id)
+  rescue Net::IMAP::Error => error
+    errors << error.message
+    return
   end
 
   private
 
+  attr_reader :imap_config, :imap
+
   def connect
-    @imap = Net::IMAP.new(@hostname, port: @port)
-    imap.starttls({}, true) if @ssl
+    @imap = Net::IMAP.new(imap_config.hostname, port: imap_config.port)
+    imap.starttls({}, true) if imap_config.ssl
     authenticate
   rescue SocketError
-    errors << t('error_messages.server_not_reachable', hostname: @hostname)
+    errors << t('error_messages.server_not_reachable',
+                hostname: imap_config.hostname)
     false
   end
 
@@ -63,14 +69,16 @@ class ImapConnector
     false
   end
 
-  def latest_mail_age_in_hours(latest_mail_date)
-    ((Time.now - latest_mail_date) / 3600).round
+  def username
+    Base64.decode64(imap_config.username)
   end
 
-  def extract_date(mail_id)
-    mail_date = imap.fetch(mail_id, 'ENVELOPE').first.attr['ENVELOPE'].date
+  def password
+    Base64.decode64(imap_config.password)
+  end
+
+  def extract_date(foldername, mail_id)
+    mail_date = mail(foldername, mail_id).date
     Time.parse(mail_date)
   end
-
-  attr_reader :username, :password, :imap
 end
