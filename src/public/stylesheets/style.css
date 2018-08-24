@@ -1,7 +1,158 @@
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+
+body {
+  padding: 2% 10% 2% 10%;
+  font-family: 'Roboto Regular', Arial !important;
+}
+
 .flash-messages {
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   width: 500px;
   text-align: center;
+}
+
+.title {
+  text-align: center;
+  margin: 0 auto 0 auto;
+  padding-top: 0.3%;
+  padding-bottom: 0.3%;
+}
+
+.ok {
+  border: 2px black solid;
+  background-color: #28a745;
+}
+
+.error {
+  border: 2px black solid;
+  background-color: #dc3545;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  background-color: #343a40;
+  color: #f8f9fa;
+  padding-left: 0.5%;
+  text-align: left;
+}
+
+td {
+  background-color: #f8f9fa;
+  color: #343a40;
+  padding: 0.5%;
+}
+
+.mailbox {
+  padding: 0;
+  margin: 2% 0 2% 0;
+  border: 2px black solid;
+}
+
+.folder {
+  padding: 0;
+  margin: 2%;
+  border: 2px black solid;
+}
+
+.foldercontent {
+  padding: 0 2% 1% 2%;
+}
+
+.foldercontent div h4 {
+  margin: 0 auto 0 auto;
+}
+
+.foldercontent div {
+  margin-top: 1%;
+}
+
+.rule {
+  border: 2px black solid;
+  background-color: #f8f9fa;
+  display: inline-block;
+  padding: 0.2%;
+}
+
+#projectname {
+  margin: 0;
+  display: inline-block;
+}
+
+#btn-home {
+  margin: 4px;
+  box-shadow: 1px 1px 5px #888888;
+  color: #fff;
+  background-color: #0bacd3;
+  border-bottom:2px solid #098aa9;
+  border-radius: 5px;
+  float: right;
+  width: 5%;
+  display: inline-block;
+  text-decoration: none;
+}
+
+#btn-home:hover {
+  color: #fff;
+  background-color: #29b6d8;
+  border-bottom:2px solid #2192ad;
+  outline: none;
+}
+
+#btn-home:active {
+  color: #fff;
+  background-color: #0a97b9;
+  border-top:2px solid #087994;
+  outline-offset: none;
+  margin-top: 2px;
+}
+
+#btn-home p {
+  margin: 8% 0 8% 0;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 450;
+}
+
+.error p {
+  margin: 0.5% 0 0.5% 1%;
+  width: 100%
+}
+
+#projectlist {
+  list-style: none;
+  text-align: center;
+  margin-left: -3%;
+}
+
+#projectlist li a h2 {
+  display: inline-block;
+}
+
+.mailbox-title {
+  display: inline;
+  position: relative;
+  left: 37%;
+}
+
+.btn-collapse {
+  float: right;
+  margin-right: 2em;
+}
+
+.btn-collapse p {
+  font-size: 20px;
+  color: #333333;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.btn-collapse:hover, .btn-collapse:visited, .btn-collapse:focus {
+  text-decoration: none;
+  outline: 0;
 }
