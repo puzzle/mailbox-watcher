@@ -11,3 +11,16 @@
       %div{class: "alert alert-#{type} alert-dismissible flash-messages"}
         %a.close{href: '', 'aria-label': 'close', 'data-dismiss': 'alert'} ×
         = message
+      
+    %h1#site-title Mailbox-Watcher
+
+    - if @projectnames.empty?
+      %div.error
+        %h3#projects-title= t('index.no_project')
+    - else
+      %h3#projects-title= t('index.title')
+    - @projectnames.each do |name| 
+      %ul#projectlist
+        %li
+          %a{ href: "/#{name}?token=#{@token}" } 
+            %h4 #{name}

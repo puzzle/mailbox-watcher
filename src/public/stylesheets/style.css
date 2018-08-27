@@ -1,7 +1,208 @@
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+
+body {
+  padding: 2% 10% 2% 10%;
+  font-family: 'Roboto Regular', Arial !important;
+}
+
 .flash-messages {
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   width: 500px;
   text-align: center;
+}
+
+.title {
+  text-align: center;
+  margin: 0 auto 0 auto;
+  padding-top: 0.3%;
+  padding-bottom: 0.3%;
+}
+
+.mailbox-header {
+  border-bottom: 2px black solid;
+}
+
+.ok {
+  background-color: #51bf90;
+  box-shadow: 1px 1px 5px #888888;
+}
+
+.error {
+  background-color: #db5555;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  background-color: #343a40;
+  color: #f8f9fa;
+  padding-left: 0.5%;
+  text-align: left;
+}
+
+td {
+  background-color: #f8f9fa;
+  color: #343a40;
+  padding: 0.5%;
+}
+
+.mailbox {
+  padding: 0;
+  margin: 2% 0 2% 0;
+  border: 2px black solid;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #888888;
+}
+
+.folder {
+  padding: 0;
+  margin: 2%;
+  border: 2px black solid;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #888888;
+}
+
+.folder-title {
+  border-bottom: 2px black solid;
+}
+
+.foldercontent {
+  padding: 0 2% 1% 2%;
+}
+
+.foldercontent div h4 {
+  margin: 0 auto 0 auto;
+}
+
+.foldercontent div {
+  margin-top: 1%;
+}
+
+.rules-title {
+  padding-bottom: 7px;
+}
+
+.description-title {
+  padding-bottom: 7px;
+}
+
+.mails-with-alerts-title {
+  padding-top: 10px;
+}
+
+.rule {
+  border: 2px black solid;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  display: inline-block;
+  padding: 0.2%;
+  box-shadow: 1px 1px 5px #888888;
+}
+
+#site-title {
+  color: #0bacd3;
+  margin: 0;
+  display: inline-block;
+}
+
+#btn-home {
+  margin: 4px;
+  box-shadow: 1px 1px 5px #888888;
+  color: #fff;
+  background-color: #0bacd3;
+  border-bottom:2px solid #098aa9;
+  border-radius: 5px;
+  float: right;
+  width: 5%;
+  display: inline-block;
+  text-decoration: none;
+}
+
+#btn-home:hover {
+  color: #fff;
+  background-color: #29b6d8;
+  border-bottom:2px solid #2192ad;
+  outline: none;
+}
+
+#btn-home:active {
+  color: #fff;
+  background-color: #0a97b9;
+  border-top:2px solid #087994;
+  outline-offset: none;
+  margin-top: 2px;
+}
+
+#btn-home p {
+  margin: 8% 0 8% 0;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 450;
+}
+
+.error p {
+  margin: 0.5% 0 0.5% 1%;
+  width: 100%
+}
+
+#projects-title {
+  margin-top: 5%;
+  margin-bottom: 1%;
+}
+
+#projectlist {
+  list-style: none;
+  margin-left: -2.5%;
+}
+
+#projectlist li a h2 {
+  display: inline-block;
+}
+
+.mailbox-title {
+  display: inline;
+  position: relative;
+  left: 37%;
+}
+
+.btn-collapse {
+  float: right;
+  margin-top: 0.1em;
+  margin-right: 2em;
+  font-size: 20px;
+  color: #333333;
+  font-weight: bold;
+}
+
+.btn-collapse:hover, .btn-collapse:visited, .btn-collapse:focus {
+  text-decoration: none;
+  outline: 0;
+  color: black;
+}
+
+.mails-table {
+  border-collapse: separate;
+  border: 2px black solid;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #888888;
+  margin-bottom: 10px;
+}
+
+.mails-table th, .mails-table td {
+  padding-left: 10px;
+}
+
+#project-description {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.alerts {
+  box-shadow: 0.5px 0.5px 2px #888888;
+  border-radius: 3px;
 }
