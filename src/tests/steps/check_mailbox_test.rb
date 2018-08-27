@@ -19,6 +19,10 @@ class CheckMailboxTest < Test::Unit::TestCase
       ImapConnector.any_instance
                    .expects(:most_recent_mail_date)
                    .returns(Time.now - 6 * 3600)
+      ImapConnector.any_instance
+                   .expects(:mails_from_folder)
+                   .with('folder1')
+                   .returns([1, 2])
 
       check_mailbox_step = CheckMailbox.new(project)
 
@@ -36,6 +40,10 @@ class CheckMailboxTest < Test::Unit::TestCase
       ImapConnector.any_instance
                    .expects(:most_recent_mail_date)
                    .returns(Time.now - 3 * 3600)
+      ImapConnector.any_instance
+                   .expects(:mails_from_folder)
+                   .with('folder1')
+                   .returns([1, 2])
 
       check_mailbox_step = CheckMailbox.new(project)
 
@@ -58,29 +66,44 @@ class CheckMailboxTest < Test::Unit::TestCase
                    .returns([1, 2])
 
       mail1 = mock('mail1')
-      mail1.expects(:subject)
-           .returns('Everything ok')
-      ImapConnector.any_instance
-                   .expects(:mail)
-                   .with('folder1', 1)
-                   .returns(mail1)
+      mail1_envelope = mock('mail1_envelope')
+      mail1.expects(:attr)
+           .returns(mail1_envelope)
+      mail1_envelope.expects(:[])
+                    .with('ENVELOPE')
+                    .returns(mail1_envelope)
+      mail1_envelope.expects(:subject)
+                    .returns('Everything ok')
 
       mail2 = mock('mail2')
-      mail2.expects(:subject)
-           .returns('Error appeared')
-           .times(2)
-      mail2.expects(:date)
-           .returns('Wed, 18 Jul 2018 08:00:00 -0700')
-      mail2.expects(:from)
-           .returns(net_imap_address)
+      mail2_envelope = mock('mail2_envelope')
+      mail2.expects(:attr)
+           .returns(mail2_envelope)
+      mail2_envelope.expects(:[])
+                    .with('ENVELOPE')
+                    .returns(mail2_envelope)
+      mail2_envelope.expects(:subject)
+                    .returns('Error')
+                    .times(2)
+      mail2_envelope.expects(:date)
+                    .returns('01.01.2000')
+      sender = mock('sender')
+      mail2_envelope.expects(:from)
+                    .returns([sender])
+      sender.expects(:name)
+            .returns('Sender')
+
       ImapConnector.any_instance
-                   .expects(:mail)
-                   .with('folder1', 2)
-                   .returns(mail2)
-      
+                   .expects(:mails)
+                   .with('folder1', [1, 2])
+                   .returns([mail1, mail2])
+
       check_mailbox_step = CheckMailbox.new(project)
+
       assert_equal false, check_mailbox_step.execute
-      assert_equal 'Error appeared', @folders.first.alert_mails.first.subject
+      assert_equal ['Alert regex (Error) matches ' \
+                    'with a mail in folder folder1'],
+                   @folders.first.errors
       assert_equal 404, check_mailbox_step.state
     end
 
@@ -96,35 +119,202 @@ class CheckMailboxTest < Test::Unit::TestCase
                    .returns([1, 2])
 
       mail1 = mock('mail1')
-      mail1.expects(:subject)
-           .returns('Everything ok')
-      ImapConnector.any_instance
-                   .expects(:mail)
-                   .with('folder1', 1)
-                   .returns(mail1)
+      mail1_envelope = mock('mail1_envelope')
+      mail1.expects(:attr)
+           .returns(mail1_envelope)
+      mail1_envelope.expects(:[])
+                    .with('ENVELOPE')
+                    .returns(mail1_envelope)
+      mail1_envelope.expects(:subject)
+                    .returns('Everything ok')
 
-      mail2 = mock('mail2')
-      mail2.expects(:subject)
-           .returns('Hello Bob')
       ImapConnector.any_instance
-                   .expects(:mail)
-                   .with('folder1', 2)
-                   .returns(mail2)
-
+                   .expects(:mails)
+                   .with('folder1', [1, 2])
+                   .returns([mail1])
       check_mailbox_step = CheckMailbox.new(project)
       assert_equal true, check_mailbox_step.execute
-      assert_equal [], @folders.first.alert_mails
+      assert_equal [], @folders.first.errors
       assert_equal 200, check_mailbox_step.state
     end
   end
 
   context 'check subject and age' do
-    def test_subject_and_regex_not_defined
+    def test_mail_older_than_max_age_and_subject_does_not_match
+      @folders = [Folder.new('folder1',
+                             'This is a folder-description',
+                             4,
+                             '(Error)')]
+
+      ImapConnector.any_instance
+                   .expects(:mails_from_folder)
+                   .with('folder1')
+                   .returns([1, 2])
+
+      mail1 = mock('mail1')
+      mail1_envelope = mock('mail1_envelope')
+      mail1.expects(:attr)
+           .returns(mail1_envelope)
+      mail1_envelope.expects(:[])
+                    .with('ENVELOPE')
+                    .returns(mail1_envelope)
+      mail1_envelope.expects(:subject)
+                    .returns('Everything ok')
+
+      ImapConnector.any_instance
+                   .expects(:mails)
+                   .with('folder1', [1, 2])
+                   .returns([mail1])
+
+      ImapConnector.any_instance
+                   .expects(:most_recent_mail_date)
+                   .returns(Time.now - 6 * 3600)
+
+      check_mailbox_step = CheckMailbox.new(project)
+
+      assert_equal false, check_mailbox_step.execute
+      assert_equal ['Latest mail older than 6 hours'], @folders.first.errors
+      assert_equal 404, check_mailbox_step.state
+    end
+
+    def test_mail_younger_than_max_age_and_subject_does_match
+      @folders = [Folder.new('folder1',
+                             'This is a folder-description',
+                             4,
+                             '(Error)')]
+
+      ImapConnector.any_instance
+                   .expects(:mails_from_folder)
+                   .with('folder1')
+                   .returns([1, 2])
+
+      mail1 = mock('mail1')
+      mail1_envelope = mock('mail1_envelope')
+      mail1.expects(:attr)
+           .returns(mail1_envelope)
+      mail1_envelope.expects(:[])
+                    .with('ENVELOPE')
+                    .returns(mail1_envelope)
+      mail1_envelope.expects(:subject)
+                    .returns('Error')
+                    .times(2)
+
+      sender = mock('sender')
+      mail1_envelope.expects(:from)
+                    .returns([sender])
+      sender.expects(:name)
+            .returns('Sender')
+      mail1_envelope.expects(:date)
+                    .returns('01.01.2000')
+      ImapConnector.any_instance
+                   .expects(:mails)
+                   .with('folder1', [1, 2])
+                   .returns([mail1])
+
+      ImapConnector.any_instance
+                   .expects(:most_recent_mail_date)
+                   .returns(Time.now - 3 * 3600)
+
+      check_mailbox_step = CheckMailbox.new(project)
+
+      assert_equal false, check_mailbox_step.execute
+      assert_equal ['Alert regex (Error) matches ' \
+                    'with a mail in folder folder1'],
+                   @folders.first.errors
+      assert_equal 404, check_mailbox_step.state
+    end
+
+    def test_mail_older_than_max_age_and_subject_does_match
+      @folders = [Folder.new('folder1',
+                             'This is a folder-description',
+                             4,
+                             '(Error)')]
+
+      ImapConnector.any_instance
+                   .expects(:mails_from_folder)
+                   .with('folder1')
+                   .returns([1, 2])
+
+      mail1 = mock('mail1')
+      mail1_envelope = mock('mail1_envelope')
+      mail1.expects(:attr)
+           .returns(mail1_envelope)
+      mail1_envelope.expects(:[])
+                    .with('ENVELOPE')
+                    .returns(mail1_envelope)
+      mail1_envelope.expects(:subject)
+                    .returns('Error')
+      mail1_envelope.expects(:subject)
+                    .returns('Error')
+      mail1_envelope.expects(:date)
+                    .returns('01.01.2000')
+      sender = mock('sender')
+      mail1_envelope.expects(:from)
+                    .returns([sender])
+      sender.expects(:name)
+            .returns('Sender')
+
+      ImapConnector.any_instance
+                   .expects(:mails)
+                   .with('folder1', [1, 2])
+                   .returns([mail1])
+
+      ImapConnector.any_instance
+                   .expects(:most_recent_mail_date)
+                   .returns(Time.now - 6 * 3600)
+
+      check_mailbox_step = CheckMailbox.new(project)
+
+      assert_equal false, check_mailbox_step.execute
+      assert_equal ['Latest mail older than 6 hours',
+                    'Alert regex (Error) matches ' \
+                    'with a mail in folder folder1'],
+                   @folders.first.errors
+      assert_equal 404, check_mailbox_step.state
+    end
+
+    def test_mail_younger_than_max_age_and_subject_does_not_match
+      @folders = [Folder.new('folder1',
+                             'This is a folder-description',
+                             4,
+                             '(Error)')]
+
+      ImapConnector.any_instance
+                   .expects(:mails_from_folder)
+                   .with('folder1')
+                   .returns([1, 2])
+
+      mail1 = mock('mail1')
+      mail1_envelope = mock('mail1_envelope')
+      mail1.expects(:attr)
+           .returns(mail1_envelope)
+      mail1_envelope.expects(:[])
+                    .with('ENVELOPE')
+                    .returns(mail1_envelope)
+      mail1_envelope.expects(:subject)
+                    .returns('Everything ok')
+
+      ImapConnector.any_instance
+                   .expects(:mails)
+                   .with('folder1', [1, 2])
+                   .returns([mail1])
+
+      ImapConnector.any_instance
+                   .expects(:most_recent_mail_date)
+                   .returns(Time.now - 6 * 3600)
+
+      check_mailbox_step = CheckMailbox.new(project)
+
+      assert_equal false, check_mailbox_step.execute
+      assert_equal ['Latest mail older than 6 hours'], @folders.first.errors
+      assert_equal 404, check_mailbox_step.state
+    end
+
+    def test_max_age_and_regex_not_defined
       @folders = [Folder.new('folder1',
                              'This is a folder-description',
                              nil,
                              nil)]
-
       check_mailbox_step = CheckMailbox.new(project)
       assert_equal false, check_mailbox_step.execute
       assert_equal ['Rules in folder folder1 are not valid'],
@@ -138,60 +328,36 @@ class CheckMailboxTest < Test::Unit::TestCase
       folders1 = [Folder.new('folder1',
                              'This is a folder-description',
                              10,
-                             '(Error)')]
+                             nil)]
 
       folders2 = [Folder.new('folder2',
                              'This is a folder-description',
                              10,
-                             '(Error)')]
+                             nil)]
 
       mailboxes2 = [Mailbox.new('mailbox1',
-                     description = 'This is a mailbox-description',
-                     folders1,
-                     imap_config),
+                                'This is a mailbox-description',
+                                folders1,
+                                imap_config),
                     Mailbox.new('mailbox2',
-                     description = 'This is a mailbox-description',
-                     folders2,
-                     imap_config)]
+                                'This is a mailbox-description',
+                                folders2,
+                                imap_config)]
 
       project2 = Project.new('project2',
                              'This is a project-description',
-                              mailboxes2)
+                             mailboxes2)
 
       ImapConnector.any_instance
                    .expects(:mails_from_folder)
                    .with('folder1')
                    .returns([1, 2])
-      
+
       ImapConnector.any_instance
                    .expects(:mails_from_folder)
                    .with('folder2')
                    .returns([1])
 
-      mail1 = mock('mail1')
-      mail1.expects(:subject)
-           .returns('Everything ok')
-      ImapConnector.any_instance
-                   .expects(:mail)
-                   .with('folder1', 1)
-                   .returns(mail1)
-
-      mail2 = mock('mail2')
-      mail2.expects(:subject)
-           .returns('Hello Bob')
-      ImapConnector.any_instance
-                   .expects(:mail)
-                   .with('folder1', 2)
-                   .returns(mail2)
-      
-      mail3 = mock('mail3')
-      mail3.expects(:subject)
-           .returns('Hello Alice')
-      ImapConnector.any_instance
-                   .expects(:mail)
-                   .with('folder2', 1)
-                   .returns(mail3)
-      
       ImapConnector.any_instance
                    .expects(:most_recent_mail_date)
                    .returns(Time.now - 3 * 3600)
@@ -216,10 +382,10 @@ class CheckMailboxTest < Test::Unit::TestCase
                 'This is a project-description',
                 mailboxes)
   end
-  
+
   def mailboxes
     [Mailbox.new('mailbox1',
-                 description = 'This is a mailbox-description',
+                 'This is a mailbox-description',
                  @folders,
                  imap_config)]
   end
@@ -242,8 +408,8 @@ class CheckMailboxTest < Test::Unit::TestCase
   end
 
   def net_imap_address
-      mail_address = Net::IMAP::Address.new
-      mail_address.name = 'Bob'
-      [mail_address]
+    mail_address = Net::IMAP::Address.new
+    mail_address.name = 'Bob'
+    [mail_address]
   end
 end

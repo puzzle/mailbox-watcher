@@ -22,10 +22,11 @@ class ImapConnectorTest < Test::Unit::TestCase
                .returns(imap)
       imap.expects(:authenticate)
           .with('LOGIN', 'bob', '1234')
-          .raises(error('authentication failure'))
+          .raises(error('authentication failed'))
 
       assert_nil imap_connector.mail('inbox', 3)
-      assert_equal 'authentication failure', imap_connector.errors.first
+      assert_equal 'Authentication to hostname.example.com failed',
+                   imap_connector.errors.first
     end
 
     def test_does_not_return_mail_by_id_if_folder_not_exist
@@ -103,10 +104,11 @@ class ImapConnectorTest < Test::Unit::TestCase
                .returns(imap)
       imap.expects(:authenticate)
           .with('LOGIN', 'bob', '1234')
-          .raises(error('authentication failure'))
+          .raises(error('authentication failed'))
 
       assert_nil imap_connector.mails_from_folder('not-existing-folder')
-      assert_equal 'authentication failure', imap_connector.errors.first
+      assert_equal 'Authentication to hostname.example.com failed',
+                   imap_connector.errors.first
     end
 
     def test_does_not_return_mails_if_folder_not_exist
@@ -165,7 +167,8 @@ class ImapConnectorTest < Test::Unit::TestCase
           .raises(error('authentication failure'))
 
       assert_nil imap_connector.most_recent_mail_date('inbox')
-      assert_equal 'authentication failure', imap_connector.errors.first
+      assert_equal 'Authentication to hostname.example.com failed',
+                   imap_connector.errors.first
     end
 
     def test_does_not_return_most_recent_mail_date_if_folder_not_exist
@@ -208,6 +211,53 @@ class ImapConnectorTest < Test::Unit::TestCase
 
       time = Time.new(2018, 7, 31, 8)
       assert_equal time, imap_connector.most_recent_mail_date('inbox')
+    end
+
+    def test_returns_mails_by_ids
+      imap = mock('imap')
+      Net::IMAP.expects(:new)
+               .with('hostname.example.com', port: 143)
+               .returns(imap)
+      imap.expects(:authenticate)
+          .with('LOGIN', 'bob', '1234')
+          .returns(ok_response)
+      imap.expects(:select)
+          .with('inbox')
+          .returns(ok_response)
+      ids = [3, 4, 5]
+      imap.expects(:fetch)
+          .with(ids, 'ENVELOPE')
+          .returns([fetched_data, fetched_data, fetched_data])
+
+      mails = imap_connector.mails('inbox', ids)
+
+      assert_equal 'Build failed in Jenkins',
+                   mails[0][0].attr['ENVELOPE'].subject
+      assert_equal 'Build failed in Jenkins',
+                   mails[1][0].attr['ENVELOPE'].subject
+      assert_equal 'Build failed in Jenkins',
+                   mails[2][0].attr['ENVELOPE'].subject
+    end
+
+    def test_does_not_return_mails_by_ids_if_id_does_not_exist
+      imap = mock('imap')
+      Net::IMAP.expects(:new)
+               .with('hostname.example.com', port: 143)
+               .returns(imap)
+      imap.expects(:authenticate)
+          .with('LOGIN', 'bob', '1234')
+          .returns(ok_response)
+      imap.expects(:select)
+          .with('inbox')
+          .returns(ok_response)
+      ids = [3, 4, 5]
+      imap.expects(:fetch)
+          .with(ids, 'ENVELOPE')
+          .raises(Net::IMAP::Error, 'No matching messages')
+
+      imap_connector.mails('inbox', ids)
+
+      assert_equal 'Mail does not exist', imap_connector.errors.first
     end
   end
 

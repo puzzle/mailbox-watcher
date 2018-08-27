@@ -102,7 +102,7 @@ class ConfigReaderTest < Test::Unit::TestCase
                                 .errors.first
     end
 
-    def test_error_appears_if_invalid_config_file_no_fitting_mailbox_in_secret_file
+    def test_error_appears_if_no_fitting_mailbox_in_secret_file
       config_path = '/config/project1.yml'
       secret_path = '/secrets/invalid_secret_file_without_mailbox.yml'
       config_file = YAML.load_file(path_to_fixtures + config_path)
@@ -139,7 +139,8 @@ class ConfigReaderTest < Test::Unit::TestCase
                    .returns("#{path_to_fixtures}/config/project1.yml")
 
       projects = config_reader.projects
-      assert_equal 'Mailboxes in project invalid_config_file_without_mailbox are not valid',
+      assert_equal 'Mailboxes in project ' \
+                   'invalid_config_file_without_mailbox are not valid',
                    projects.first.errors.first
     end
 
@@ -219,7 +220,8 @@ class ConfigReaderTest < Test::Unit::TestCase
 
     def test_imap_config_valid_if_valid_secret_file_without_port_and_without_tls
       config_path = '/config/project1.yml'
-      secret_path = '/secrets/valid_secret_file_without_port_and_without_tls.yml'
+      secret_path = '/secrets/valid_secret_file_' \
+                    'without_port_and_without_tls.yml'
       config_file = YAML.load_file(path_to_fixtures + config_path)
       secret_file = YAML.load_file(path_to_fixtures + secret_path)
 
