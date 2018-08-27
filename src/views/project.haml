@@ -18,10 +18,10 @@
     %div.mailbox
       %div.mailbox-header{class: "#{mailbox[:status]}"}
         %h2.mailbox-title.title #{mailbox[:name]}
-        %a.btn-collapse{'aria-controls': "collapse_#{id}", 'aria-expanded': 'false', 'data-toggle': 'collapse', href: "#collapse_#{id}", role: 'button', onclick: 'changeIcon(event);'}
-          %span#collapse-icon.glyphicon.glyphicon-chevron-left
+        %a.btn-collapse{'aria-controls': "collapse-#{id}", 'aria-expanded': 'false', 'data-toggle': 'collapse', href: "#collapse-#{id}", role: 'button', onclick: "changeIcon(#{id}, event);"}
+          %span.glyphicon.glyphicon-chevron-left{id: "icon-collapse-#{id}"}
             
-      %div{class: 'collapse multi-collapse', id: "collapse_#{id}"}
+      %div{class: 'collapse multi-collapse', id: "collapse-#{id}"}
         %div.card.card-body
           - mailbox[:folders].each do |folder|
             %div.folder
@@ -56,4 +56,3 @@
                         %td #{alert_mail[:subject]}
                         %td #{alert_mail[:sender]}
                         %td #{alert_mail[:"received-at"]}
-    
