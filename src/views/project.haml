@@ -10,7 +10,7 @@
   %body
     %div
       %h1#projectname #{@project_data[:projectname]}
-      %a.btn#btn-home{href: "/test-homepage/#{@token}", role: 'button'}
+      %a.btn#btn-home{href: "/test-homepage?token=#{@token}", role: 'button'}
         %p Home
   - if @project_data[:description]
     %p#project-description #{@project_data[:description]}

@@ -2,7 +2,7 @@
 
 require 'yaml'
 require 'sinatra'
-# require 'sinatra/flash'
+require 'sinatra/flash'
 require 'json'
 require 'haml'
 require_relative 'lib/imap_connector'
@@ -18,23 +18,19 @@ class App < Sinatra::Base
 
   # start server: puma
 
-  # work in progress
-  get '/test-config' do
-    p = Prepare.new('cryptopus')
-    project = p.execute
-    return 404, p.errors if project.nil?
-
-    c = CheckMailbox.new(project)
-    c.execute
-
-    g = GenerateReport.new(project)
-    g.execute
-
-  #  flash[:danger] = 'This is an error'
+  get '/test-homepage' do
+    @token = params['token']
+    ct = CheckToken.new(@token)
+    unless ct.execute
+      @errors = ct.errors
+      return haml :authentication_failed
+    end
+    config_reader = ConfigReader.new
+    @projectnames = config_reader.projectnames
     haml :index
   end
 
-  get '/:project/:token' do
+  get '/:project' do
     @token = params['token']
     ct = CheckToken.new(@token) 
     unless ct.execute

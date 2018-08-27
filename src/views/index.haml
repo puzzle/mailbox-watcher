@@ -11,3 +11,14 @@
       %div{class: "alert alert-#{type} alert-dismissible flash-messages"}
         %a.close{href: '', 'aria-label': 'close', 'data-dismiss': 'alert'} ×
         = message
+
+    - if @projectnames.empty?
+      %div.error
+        %h1.title Sie haben keine Projekte definiert
+    - else
+      %h1.title Ihre Projekte
+    - @projectnames.each do |name| 
+      %ul#projectlist
+        %li
+          %a{ href: "/#{name}?token=#{@token}" } 
+            %h2 #{name}
