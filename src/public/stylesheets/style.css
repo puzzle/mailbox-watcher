@@ -103,7 +103,7 @@ td {
   box-shadow: 1px 1px 5px #888888;
 }
 
-#projectname {
+#site-title {
   color: #0bacd3;
   margin: 0;
   display: inline-block;
@@ -150,10 +150,14 @@ td {
   width: 100%
 }
 
+#projects-title {
+  margin-top: 5%;
+  margin-bottom: 1%;
+}
+
 #projectlist {
   list-style: none;
-  text-align: center;
-  margin-left: -3%;
+  margin-left: -2.5%;
 }
 
 #projectlist li a h2 {

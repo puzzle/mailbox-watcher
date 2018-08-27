@@ -9,7 +9,7 @@
     %title #{@project_data[:projectname]}
   %body
     %div
-      %h1#projectname #{@project_data[:projectname]}
+      %h1#site-title #{@project_data[:projectname]}
       %a.btn#btn-home{href: "/test-homepage?token=#{@token}", role: 'button'}
         %p Home
   - if @project_data[:description]

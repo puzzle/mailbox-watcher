@@ -13,3 +13,7 @@ en:
     project_config_not_found: "Config for project %{projectname} not found"
     authentication_failed: "Authentication with invalid token failed"
     no_project_configs_existing: "There are no project config files existing."
+  index:
+    title: "Projects:"
+    no_project: "No project defined"
+

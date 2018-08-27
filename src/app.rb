@@ -27,6 +27,9 @@ class App < Sinatra::Base
     end
     config_reader = ConfigReader.new
     @projectnames = config_reader.projectnames
+
+    # flash[:danger] = 'This is an error'
+    
     haml :index
   end
 
