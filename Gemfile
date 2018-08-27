@@ -2,6 +2,7 @@
 
 source 'https://rubygems.org'
 
+gem 'haml'
 gem 'i18n'
 gem 'json'
 gem 'mocha'
@@ -10,3 +11,4 @@ gem 'puma'
 gem 'rack-test'
 gem 'rubocop'
 gem 'sinatra'
+gem 'sinatra-flash'

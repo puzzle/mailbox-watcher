@@ -23,14 +23,14 @@ class ConfigReader
     end
   end
 
-  private
-
   def projectnames
     filenames = Dir.glob(['config/*.yml'])
     filenames.collect do |filename|
       File.basename(filename, '.yml')
     end
   end
+
+  private
 
   def project_description
     config_file.dig('description')

@@ -4,6 +4,9 @@ GEM
     ast (2.4.0)
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
+    haml (5.0.4)
+      temple (>= 0.8.0)
+      tilt
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.1)
@@ -41,6 +44,9 @@ GEM
       rack (~> 2.0)
       rack-protection (= 2.0.3)
       tilt (~> 2.0)
+    sinatra-flash (0.3.0)
+      sinatra (>= 1.0.0)
+    temple (0.8.0)
     tilt (2.0.8)
     unicode-display_width (1.4.0)
 
@@ -48,6 +54,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  haml
   i18n
   json
   mocha
@@ -56,6 +63,7 @@ DEPENDENCIES
   rack-test
   rubocop
   sinatra
+  sinatra-flash
 
 BUNDLED WITH
    1.16.3

@@ -2,6 +2,9 @@
 
 require 'yaml'
 require 'sinatra'
+require 'sinatra/flash'
+require 'json'
+require 'haml'
 require_relative 'lib/imap_connector'
 require_relative 'lib/config_reader'
 require_relative 'steps/check_token'
@@ -10,6 +13,9 @@ require_relative 'steps/check_mailbox'
 require_relative 'steps/generate_report'
 
 class App < Sinatra::Base
+  enable :sessions
+  register Sinatra::Flash
+  
   # start server: puma
 
   # work in progress
@@ -25,6 +31,12 @@ class App < Sinatra::Base
     g.execute
 
     return 200, 'test'
+  end
+  
+  get '/flash-message' do
+    flash[:danger] = 'This is an error'
+    @projectnames = ['projectname']
+    haml :index
   end
 
   # work in progress
