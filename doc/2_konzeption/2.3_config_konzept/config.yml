@@ -5,10 +5,10 @@ mailboxes:
     folders:
       inbox:
         description: default folder
-        alert-regex: /(Error|Failure)/
+        alert-regex: (Error|Failure)
       backup:
         description: messages from integration environment
-        alert-regex: /(Error)/
+        alert-regex: (Error)
         max-age: 1
       monitoring:
         description: icinga notifications
