@@ -60,16 +60,6 @@ class App < Sinatra::Base
     halt check_token.state, check_token.errors unless check_token.execute
   end
 
-  def error_string(errors)
-    errors = errors.uniq
-
-    error_string = '<ul>'
-    errors.each do |error|
-      error_string += "<li>#{error}"
-    end
-    error_string += '</ul>'
-  end
-
   def mailbox_errors(project)
     return [] unless project
 
