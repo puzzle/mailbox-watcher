@@ -7,8 +7,9 @@
 %html
 - flash.each do |type, message|
   %div{class: "alert alert-#{type} alert-dismissible flash-messages"}
-    %a.close{href: '', 'aria-label': 'close', 'data-dismiss': 'alert'} ×
-    = message
+    - if type == :danger
+      %a.close{href: '', 'aria-label': 'close', 'data-dismiss': 'alert'} ×
+      = "<ul><li>#{message.join('</li><li>')}</li></ul>"
 - if @project_data
   %head
     %title #{@project_data["projectname"]}

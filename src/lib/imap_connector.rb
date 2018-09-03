@@ -42,7 +42,8 @@ class ImapConnector
     imap.fetch(ids, 'ENVELOPE')
   rescue Net::IMAP::Error => error
     if error.message.include? 'No matching messages'
-      return errors << t('error_messages.mail_does_not_exist')
+    errors << t('error_messages.mail_does_not_exist')
+    return
     end
     errors << error.message
   end
@@ -67,7 +68,7 @@ class ImapConnector
     @imap = Net::IMAP.new(imap_config.hostname, port: imap_config.port)
     imap.starttls({}, true) if imap_config.ssl
     authenticate
-  rescue StandardError
+  rescue SocketError
     errors << t('error_messages.server_not_reachable',
                 hostname: imap_config.hostname)
     false

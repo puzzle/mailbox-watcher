@@ -25,8 +25,8 @@ class ImapConnectorTest < Test::Unit::TestCase
           .raises(error('authentication failed'))
 
       assert_nil imap_connector.mail('inbox', 3)
-      assert_equal 'Authentication to hostname.example.com failed',
-                   imap_connector.errors.first
+      assert_equal ['Authentication to hostname.example.com failed'],
+                   imap_connector.errors
     end
 
     def test_does_not_return_mail_by_id_if_folder_not_exist
@@ -43,7 +43,7 @@ class ImapConnectorTest < Test::Unit::TestCase
       imap.expects(:search).never
 
       assert_nil imap_connector.mail('not-existing-folder', 3)
-      assert_equal 'Mailbox does not exist', imap_connector.errors.first
+      assert_equal ['Mailbox does not exist'], imap_connector.errors
     end
 
     def test_does_not_return_mail_if_mail_with_id_does_not_exist
@@ -62,7 +62,7 @@ class ImapConnectorTest < Test::Unit::TestCase
           .raises(error('No matching messages (0.000 sec)'))
 
       assert_nil imap_connector.mail('inbox', 42)
-      assert_equal 'Mail does not exist', imap_connector.errors.first
+      assert_equal ['Mail does not exist'], imap_connector.errors
     end
 
     def test_returns_mail_by_id
@@ -93,8 +93,8 @@ class ImapConnectorTest < Test::Unit::TestCase
                .raises(SocketError)
 
       assert_nil imap_connector.mails_from_folder('inbox')
-      assert_equal 'IMAP-Server hostname.example.com not reachable',
-                   imap_connector.errors.first
+      assert_equal ['IMAP-Server hostname.example.com not reachable'],
+                   imap_connector.errors
     end
 
     def test_does_not_return_mails_if_authentication_failed
@@ -107,8 +107,8 @@ class ImapConnectorTest < Test::Unit::TestCase
           .raises(error('authentication failed'))
 
       assert_nil imap_connector.mails_from_folder('not-existing-folder')
-      assert_equal 'Authentication to hostname.example.com failed',
-                   imap_connector.errors.first
+      assert_equal ['Authentication to hostname.example.com failed'],
+                   imap_connector.errors
     end
 
     def test_does_not_return_mails_if_folder_not_exist
@@ -125,7 +125,7 @@ class ImapConnectorTest < Test::Unit::TestCase
       imap.expects(:search).never
 
       assert_nil imap_connector.mails_from_folder('not-existing-folder')
-      assert_equal 'Mailbox does not exist', imap_connector.errors.first
+      assert_equal ['Mailbox does not exist'], imap_connector.errors
     end
 
     def test_returns_mails_from_folder
@@ -153,8 +153,8 @@ class ImapConnectorTest < Test::Unit::TestCase
                .raises(SocketError)
 
       assert_nil imap_connector.most_recent_mail_date('inbox')
-      assert_equal 'IMAP-Server hostname.example.com not reachable',
-                   imap_connector.errors.first
+      assert_equal ['IMAP-Server hostname.example.com not reachable'],
+                   imap_connector.errors
     end
 
     def test_does_not_return_most_recent_mail_date_if_authentication_failed
@@ -167,8 +167,8 @@ class ImapConnectorTest < Test::Unit::TestCase
           .raises(error('authentication failure'))
 
       assert_nil imap_connector.most_recent_mail_date('inbox')
-      assert_equal 'Authentication to hostname.example.com failed',
-                   imap_connector.errors.first
+      assert_equal ['Authentication to hostname.example.com failed'],
+                   imap_connector.errors
     end
 
     def test_does_not_return_most_recent_mail_date_if_folder_not_exist
@@ -185,7 +185,7 @@ class ImapConnectorTest < Test::Unit::TestCase
       imap.expects(:search).never
 
       assert_nil imap_connector.most_recent_mail_date('not-existing-folder')
-      assert_equal 'Mailbox does not exist', imap_connector.errors.first
+      assert_equal ['Mailbox does not exist'], imap_connector.errors
     end
 
     def test_returns_most_recent_mail_date
@@ -257,7 +257,7 @@ class ImapConnectorTest < Test::Unit::TestCase
 
       imap_connector.mails('inbox', ids)
 
-      assert_equal 'Mail does not exist', imap_connector.errors.first
+      assert_equal ['Mail does not exist'], imap_connector.errors
     end
   end
 

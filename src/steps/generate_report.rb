@@ -42,7 +42,7 @@ class GenerateReport < Step
       {
         'name' => folder.name,
         'description' => folder.description,
-        'max-age' => max_age(folder.max_age),
+        'max-age' => format_max_age(folder.max_age),
         'alert-regex' => folder.alert_regex,
         'number-of-mails' => folder.number_of_mails,
         'alerts' => folder.errors,
@@ -66,8 +66,8 @@ class GenerateReport < Step
     t.strftime('%d.%m.%Y')
   end
 
-  def max_age(hours)
-    return unless hours
+  def format_max_age(hours)
+    return nil unless hours
     hours > 24 ? (hours / 24).to_s + 'd' : hours.to_s + 'h'
   end
 end

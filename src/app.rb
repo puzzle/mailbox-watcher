@@ -46,9 +46,9 @@ class App < Sinatra::Base
       @project_data = nil
     end
 
-    errors = [p.errors, c.errors, mailbox_errors(project)].reduce([], :concat)
+    errors = [p.errors, c.errors, mailbox_errors(project)].reduce([], :concat).flatten
     errors.concat project.errors if project
-    flash.now[:danger] = error_string(errors) unless errors.empty?
+    flash.now[:danger] = errors unless errors.empty?
     haml :project
   end
 
@@ -71,13 +71,15 @@ class App < Sinatra::Base
   end
 
   def mailbox_errors(project)
-    errors = []
-    return errors unless project
-    project.mailboxes.each do |mailbox|
-      errors.concat mailbox.errors
-      imap_errors = mailbox.imap_config&.errors
-      errors.concat imap_errors if imap_errors
-    end
-    errors
+    return [] unless project
+
+    project
+      .mailboxes
+      .flat_map do |mailbox|
+      [
+        mailbox.errors,
+        mailbox.imap_config&.errors
+      ]
+    end.compact
   end
 end
