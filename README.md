@@ -72,3 +72,10 @@ $ bundle install
 ### Run rubocop
 
 ```$ rubocop -R```
+
+## Featurelist
+
+- Monitors several projects with different mailboxes
+- Checks mails for a maximum age
+- Checks mails subject with a regex
+- Generates projectsite with report
