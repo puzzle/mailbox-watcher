@@ -1,10 +1,10 @@
 $(document).ready(function() {
   $('.collapse').on('show.bs.collapse', function(e) {
-    changeIcon(e, 'glyphicon-chevron-left', 'glyphicon-chevron-down');
+    changeIcon(e, 'glyphicon-chevron-right', 'glyphicon-chevron-down');
   });
   
   $('.collapse').on('hide.bs.collapse', function(e) {
-    changeIcon(e, 'glyphicon-chevron-down', 'glyphicon-chevron-left');
+    changeIcon(e, 'glyphicon-chevron-down', 'glyphicon-chevron-right');
   });
 });
 
