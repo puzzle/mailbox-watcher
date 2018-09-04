@@ -29,6 +29,24 @@ class App < Sinatra::Base
     haml :index
   end
 
+  get '/status' do
+    check_token(params['token'])
+
+    p = Prepare.new(params['id'])
+    project = p.execute
+    return p.state if project.nil?
+
+    c = CheckMailbox.new(project)
+    c.execute
+
+    gr = GenerateReport.new(project)
+    project_data = JSON.parse(gr.execute)
+
+    error_codes = extract_status_codes(project_data['mailboxes'])
+    status = error_codes.include?(500) ? 500 : 200
+    return status, status.to_s
+  end
+
   get '/:project' do
     @token = params['token']
     check_token(@token)
@@ -42,17 +60,22 @@ class App < Sinatra::Base
       c.execute
       gr = GenerateReport.new(project)
       @project_data = JSON.parse(gr.execute)
-    else
-      @project_data = nil
     end
 
-    errors = [p.errors, c.errors, mailbox_errors(project)].reduce([], :concat).flatten
-    errors.concat project.errors if project
-    flash.now[:danger] = errors unless errors.empty?
+    errors = [p.errors, c.errors, project&.errors, mailbox_errors(project)].flatten
+    errors.compact!
+    flash.now[:danger] = errors if errors.any?
+
     haml :project
   end
 
   private
+
+  def extract_status_codes(mailboxes)
+    mailboxes.collect do |mailbox|
+      mailbox['status'] == 'ok' ? 200 : 500
+    end
+  end
 
   def check_token(sent_token)
     check_token = CheckToken.new(sent_token)
@@ -70,6 +93,6 @@ class App < Sinatra::Base
         mailbox.errors,
         mailbox.imap_config&.errors
       ]
-    end.compact
+    end
   end
 end
