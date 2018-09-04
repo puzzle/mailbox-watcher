@@ -9,7 +9,9 @@
   %div{class: "alert alert-#{type} alert-dismissible flash-messages"}
     - if type == :danger
       %a.close{href: '', 'aria-label': 'close', 'data-dismiss': 'alert'} ×
-      = "<ul><li>#{message.join('</li><li>')}</li></ul>"
+      %ul
+      - message.uniq.each do |message|
+        %li #{message}
 - if @project_data
   %head
     %title #{@project_data["projectname"]}

@@ -42,8 +42,8 @@ class ImapConnector
     imap.fetch(ids, 'ENVELOPE')
   rescue Net::IMAP::Error => error
     if error.message.include? 'No matching messages'
-    errors << t('error_messages.mail_does_not_exist')
-    return
+      errors << t('error_messages.mail_does_not_exist')
+      return
     end
     errors << error.message
   end
