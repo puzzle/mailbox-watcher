@@ -17,9 +17,9 @@ class ImapConnector
 
     imap.select(foldername)
     imap.search(['ALL'])
-  rescue Net::IMAP::Error => error
-    errors << error.message
-    return
+  rescue Net::IMAP::Error => error 
+    errors << t('error_messages.folder_does_not_exist', foldername: foldername)
+    nil
   end
 
   def mail(foldername, id)
@@ -33,7 +33,19 @@ class ImapConnector
       return
     end
     errors << error.message
-    return
+    nil
+  end
+
+  def mails(foldername, ids)
+    return unless connect
+    imap.select(foldername)
+    imap.fetch(ids, 'ENVELOPE')
+  rescue Net::IMAP::Error => error
+    if error.message.include? 'No matching messages'
+      errors << t('error_messages.mail_does_not_exist')
+      return
+    end
+    errors << error.message
   end
 
   def most_recent_mail_date(foldername)
@@ -44,7 +56,7 @@ class ImapConnector
     extract_date(foldername, mail_id)
   rescue Net::IMAP::Error => error
     errors << error.message
-    return
+    nil
   end
 
   private
@@ -52,6 +64,7 @@ class ImapConnector
   attr_reader :imap_config, :imap
 
   def connect
+    return unless imap_config
     @imap = Net::IMAP.new(imap_config.hostname, port: imap_config.port)
     imap.starttls({}, true) if imap_config.ssl
     authenticate
@@ -64,16 +77,19 @@ class ImapConnector
   def authenticate
     imap.authenticate('LOGIN', username, password)
     true
-  rescue Net::IMAP::Error => error
-    errors << error.message
+  rescue Net::IMAP::Error
+    errors << t('error_messages.imap_login_failed',
+                hostname: imap_config.hostname)
     false
   end
 
   def username
+    return '' unless imap_config.username
     Base64.decode64(imap_config.username)
   end
 
   def password
+    return '' unless imap_config.password
     Base64.decode64(imap_config.password)
   end
 

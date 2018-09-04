@@ -10,9 +10,11 @@ en:
     mailbox_not_defined_in_secret_file: "Mailbox %{mailbox} is not defined in Secret-File"
     mail_does_not_exist: "Mail does not exist"
     regex_matches_with_subject: "Alert regex %{alert_regex} matches with a mail in folder %{folder}"
+    folder_does_not_exist: "Folder %{foldername} does not exist"
     project_config_not_found: "Config for project %{projectname} not found"
     authentication_failed: "Authentication with invalid token failed"
     no_project_configs_existing: "There are no project config files existing."
+    imap_login_failed: "Authentication to %{hostname} failed"
   index:
     title: "Projects:"
     no_project: "No project defined"

@@ -12,8 +12,12 @@ class ProjectTest < Test::Unit::TestCase
     end
 
     def test_project_invalid_if_mailboxes_empty
-      project_without_mailboxes = Project.new('project1', 'This is project-description', [])
-      assert_equal 'Mailboxes in project project1 are not valid', project_without_mailboxes.errors.first
+      project_without_mailboxes = Project.new('project1',
+                                              'This is project-description',
+                                              [])
+
+      assert_equal 'Mailboxes in project project1 are not valid',
+                   project_without_mailboxes.errors.first
     end
   end
 
@@ -37,7 +41,7 @@ class ProjectTest < Test::Unit::TestCase
 
   def mailboxes
     [Mailbox.new('mailbox1',
-                 description = 'This is a mailbox-description',
+                 'This is a mailbox-description',
                  folders,
                  imap_config)]
   end

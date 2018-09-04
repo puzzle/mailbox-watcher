@@ -18,9 +18,13 @@ class Mailbox
   end
 
   def validate
-    errors << t('error_messages.folders_not_valid',
-                mailbox: @name) if folders.empty?
-    errors << t('error_messages.mailbox_not_defined_in_secret_file',
-                mailbox: @name) unless imap_config
+    if folders.empty?
+      errors << t('error_messages.folders_not_valid',
+                  mailbox: @name)
+    end
+    unless imap_config
+      errors << t('error_messages.mailbox_not_defined_in_secret_file',
+                  mailbox: @name)
+    end
   end
 end

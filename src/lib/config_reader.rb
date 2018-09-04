@@ -37,33 +37,50 @@ class ConfigReader
   end
 
   def mailbox_description(mailboxname)
-    config_file.dig('mailboxes', mailboxname, 'description')
+    config_file.dig('mailboxes',
+                    mailboxname,
+                    'description')
   end
 
   def folder_description(mailboxname, foldername)
-    config_file.dig('mailboxes', mailboxname, 'folders', foldername, 'description')
+    config_file.dig('mailboxes',
+                    mailboxname,
+                    'folders',
+                    foldername,
+                    'description')
   end
 
   def alert_regex(mailboxname, foldername)
-    config_file.dig('mailboxes', mailboxname, 'folders', foldername, 'alert-regex')
+    config_file.dig('mailboxes',
+                    mailboxname,
+                    'folders',
+                    foldername,
+                    'alert-regex')
   end
 
   def max_age(mailboxname, foldername)
-    config_file.dig('mailboxes', mailboxname, 'folders', foldername, 'max-age')
+    config_file.dig('mailboxes',
+                    mailboxname,
+                    'folders',
+                    foldername,
+                    'max-age')
   end
 
   def imap_config(mailboxname)
-    secret_file.dig('mailboxes', mailboxname)
+    secret_file.dig('mailboxes',
+                    mailboxname)
   end
 
   def mailboxes
     mailboxes = config_file.dig('mailboxes')
-    mailboxes.keys if mailboxes
+    mailboxes&.keys
   end
 
   def folders(mailboxname)
-    folders = config_file.dig('mailboxes', mailboxname, 'folders')
-    folders.keys if folders
+    folders = config_file.dig('mailboxes',
+                              mailboxname,
+                              'folders')
+    folders&.keys
   end
 
   def create_project(projectname)

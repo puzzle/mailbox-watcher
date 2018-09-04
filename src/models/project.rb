@@ -15,7 +15,9 @@ class Project
   end
 
   def validate
-    errors << t('error_messages.mailboxes_not_valid',
-                project: projectname) if mailboxes.empty?
+    if mailboxes.empty?
+      errors << t('error_messages.mailboxes_not_valid',
+                  project: projectname)
+    end
   end
 end

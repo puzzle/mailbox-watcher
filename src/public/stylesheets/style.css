@@ -13,14 +13,8 @@ body {
   text-align: center;
 }
 
-.title {
-  text-align: center;
-  margin: 0 auto 0 auto;
-  padding-top: 0.3%;
-  padding-bottom: 0.3%;
-}
-
 .mailbox-header {
+  height: 2.5em;
   border-bottom: 2px black solid;
 }
 
@@ -58,6 +52,16 @@ td {
   box-shadow: 1px 1px 5px #888888;
 }
 
+.mailbox-title {
+  display: inline;
+  position: absolute;
+  left: 50%;
+  padding-bottom: 0.5%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
 .folder {
   padding: 0;
   margin: 2%;
@@ -67,6 +71,10 @@ td {
 }
 
 .folder-title {
+  text-align: center;
+  margin: 0 auto 0 auto;
+  padding-top: 0.3%;
+  padding-bottom: 0.3%;
   border-bottom: 2px black solid;
 }
 
@@ -159,14 +167,8 @@ td {
   margin-left: -2.5%;
 }
 
-#projectlist li a h2 {
+#projectlist li a h4 {
   display: inline-block;
-}
-
-.mailbox-title {
-  display: inline;
-  position: relative;
-  left: 37%;
 }
 
 .btn-collapse {
@@ -188,6 +190,8 @@ td {
   border-collapse: separate;
   border: 2px black solid;
   border-radius: 5px;
+  border-spacing: 0 1px;
+  background-color: #333;
   box-shadow: 1px 1px 5px #888888;
   margin-bottom: 10px;
 }

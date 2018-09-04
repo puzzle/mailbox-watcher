@@ -5,54 +5,69 @@
 %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
 %script{:type => "text/javascript", :src => "/javascripts/collapse.js"}
 %html
+- flash.each do |type, message|
+  %div{class: "alert alert-#{type} alert-dismissible flash-messages"}
+    - if type == :danger
+      %a.close{href: '', 'aria-label': 'close', 'data-dismiss': 'alert'} ×
+      %ul
+      - message.uniq.each do |message|
+        %li #{message}
+- if @project_data
   %head
-    %title #{@project_data[:projectname]}
+    %title #{@project_data["projectname"]}
   %body
     %div
-      %h1#site-title #{@project_data[:projectname]}
-      %a.btn#btn-home{href: "/test-homepage?token=#{@token}", role: 'button'}
+      %h1#site-title #{@project_data["projectname"]}
+      %a.btn#btn-home{href: "/home?token=#{@token}", role: 'button'}
         %p Home
-  - if @project_data[:description]
-    %p#project-description #{@project_data[:description]}
-  - @project_data[:mailboxes].each_with_index do |mailbox, id|
+  - if @project_data["description"]
+    %p#project-description #{@project_data["description"]}
+  - @project_data["mailboxes"].each_with_index do |mailbox, id|
     %div.mailbox
-      %div.mailbox-header{class: "#{mailbox[:status]}"}
-        %h2.mailbox-title.title #{mailbox[:name]}
+      %div.mailbox-header{class: "#{mailbox["status"]}"}
+        %h2.mailbox-title #{mailbox["name"]}
         %a.btn-collapse{'aria-controls': "collapse-#{id}", 'aria-expanded': 'false', 'data-toggle': 'collapse', href: "#collapse-#{id}", role: 'button', onclick: "changeIcon(#{id}, event);"}
           %span.glyphicon.glyphicon-chevron-right{id: "icon-collapse-#{id}"}
             
       %div{class: 'collapse multi-collapse', id: "collapse-#{id}"}
         %div.card.card-body
-          - mailbox[:folders].each do |folder|
+          - mailbox["folders"].each do |folder|
             %div.folder
-              %h3.folder-title.title{ :class => (folder[:alerts].empty? && folder[:"alert-mails"].empty? ? "ok" : "error") } #{folder[:name]} (#{folder[:"number-of-mails"]})
-              %div.foldercontent
-                %div
-                  %h4.rules-title Rules
-                  - if folder[:"max-age"]
-                    %p.rule= 'max-age: ' + (folder[:"max-age"].to_i < 24 ? "#{folder[:"max-age"]}h" : (folder[:"max-age"] / 24).to_i.to_s + 'd')
-                  - if folder[:"alert-regex"]
-                    %p.rule alert-regex: #{folder[:"alert-regex"]}
-                - if folder[:description]
+              - if folder["number-of-mails"]
+                %h3.folder-title.title{ :class => (folder["alerts"].empty? && folder["alert-mails"].empty? ? "ok" : "error") } #{folder["name"]} (#{folder["number-of-mails"]})
+                %div.foldercontent
                   %div
-                    %h4.description-title Description
-                    %p #{folder[:description]}
-                - if folder[:alerts].any?
-                  %div
-                    %h4 Alerts
-                    - folder[:alerts].each do |alert|
-                      %div.error.alerts
-                        %p #{alert}
-                - if folder[:"alert-mails"].any?
-                  %h4.mails-with-alerts-title Mails with alerts
-                  %table.mails-table
-                    %tbody
-                      %tr
-                        %th Subject
-                        %th Sender
-                        %th Received at
-                    - folder[:"alert-mails"].each do |alert_mail|
-                      %tr
-                        %td #{alert_mail[:subject]}
-                        %td #{alert_mail[:sender]}
-                        %td #{alert_mail[:"received-at"]}
+                    %h4.rules-title Rules
+                    - if folder["max-age"]
+                      %p.rule max-age: #{folder["max-age"]}
+                    - if folder["alert-regex"]
+                      %p.rule alert-regex: #{folder["alert-regex"]}
+                  - if folder["description"]
+                    %div
+                      %h4.description-title Description
+                      %p #{folder["description"]}
+                  - if folder["alerts"].any?
+                    %div
+                      %h4 Alerts
+                      - folder["alerts"].each do |alert|
+                        %div.error.alerts
+                          %p #{alert}
+                  - if folder["alert-mails"].any?
+                    %h4.mails-with-alerts-title Mails with alerts
+                    %table.mails-table
+                      %tbody
+                        %tr
+                          %th{style: 'width: 34%;'} Subject
+                          %th{style: 'width: 33%;'} Sender
+                          %th{style: 'width: 33%;'} Received at
+                      - folder["alert-mails"].each do |alert_mail|
+                        %tr
+                          %td #{alert_mail["subject"]}
+                          %td #{alert_mail["sender"]}
+                          %td #{alert_mail["received-at"]}
+              - else
+                %h3.folder-title.title.error #{folder["name"]}
+
+- else
+  %head
+    %title Project does not exist
