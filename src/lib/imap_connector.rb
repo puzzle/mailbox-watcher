@@ -17,7 +17,7 @@ class ImapConnector
 
     imap.select(foldername)
     imap.search(['ALL'])
-  rescue Net::IMAP::Error 
+  rescue Net::IMAP::Error
     errors << t('error_messages.folder_does_not_exist', foldername: foldername)
     nil
   end
