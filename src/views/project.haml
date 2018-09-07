@@ -71,3 +71,7 @@
 - else
   %head
     %title Project does not exist
+  %body
+    %div
+      %a.btn.config-not-found#btn-home{href: "/home?token=#{@token}", role: 'button'}
+        %p Home
