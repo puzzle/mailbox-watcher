@@ -20,7 +20,7 @@ class ConfigReader
       @config_file = load_file(filepath)
       next unless secret_file_present?(projectname)
       create_project(projectname)
-    end
+    end.compact
   end
 
   def projectnames
