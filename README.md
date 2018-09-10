@@ -8,11 +8,11 @@ specific rules and returns a report.
 
 ## Prerequisites
 
--Git
+- Git
 
--Ruby
+- Ruby
 
--Bundler
+- Bundler
 
 ## Installation
 
