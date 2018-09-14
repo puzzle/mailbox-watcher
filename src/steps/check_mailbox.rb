@@ -35,7 +35,7 @@ class CheckMailbox < Step
     return true if folder.alert_regex.nil?
 
     mails = imap_connector.mails(folder.name, mail_ids)
-
+    return false unless mails
     mail_states = mails.collect do |mail|
       mail = mail.attr['ENVELOPE']
       regex = /#{folder.alert_regex}/

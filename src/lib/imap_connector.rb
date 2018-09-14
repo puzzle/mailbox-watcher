@@ -26,26 +26,21 @@ class ImapConnector
     return unless connect
 
     imap.select(foldername)
+    raise Net::IMAP::Error.new('Invalid sequence in Fetch') unless id
     imap.fetch(id, 'ENVELOPE').first.attr['ENVELOPE']
   rescue Net::IMAP::Error => error
-    if error.message.include? 'No matching messages'
-      errors << t('error_messages.mail_does_not_exist')
-      return
-    end
-    errors << error.message
+    errors << error_message(error, foldername)
     nil
   end
 
   def mails(foldername, ids)
     return unless connect
+
     imap.select(foldername)
     imap.fetch(ids, 'ENVELOPE')
   rescue Net::IMAP::Error => error
-    if error.message.include? 'No matching messages'
-      errors << t('error_messages.mail_does_not_exist')
-      return
-    end
-    errors << error.message
+    errors << error_message(error, foldername)
+    nil
   end
 
   def most_recent_mail_date(foldername)
@@ -55,7 +50,7 @@ class ImapConnector
     mail_id = imap.search(['ALL']).last
     extract_date(foldername, mail_id)
   rescue Net::IMAP::Error => error
-    errors << error.message
+    errors << error_message(error, foldername)
     nil
   end
 
@@ -94,7 +89,17 @@ class ImapConnector
   end
 
   def extract_date(foldername, mail_id)
-    mail_date = mail(foldername, mail_id).date
-    Time.parse(mail_date)
+    mail = mail(foldername, mail_id)
+    return nil unless mail
+    Time.parse(mail.date)
+  end
+
+  def error_message(error, foldername)
+    if error.message.include? 'No matching messages'
+      return t('error_messages.mail_does_not_exist')
+    elsif error.message.include? 'Invalid sequence in Fetch'
+      return t('error_messages.folder_empty', foldername: foldername)
+    end
+    return error.message
   end
 end
