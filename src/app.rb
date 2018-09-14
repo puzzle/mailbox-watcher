@@ -17,6 +17,9 @@ class App < Sinatra::Base
   register Sinatra::Flash
 
   # start server: puma
+  get '/' do
+    redirect "/home?token=#{params['token']}"
+  end
 
   get '/home' do
     @token = params['token']
