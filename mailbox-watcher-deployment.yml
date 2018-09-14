@@ -1,0 +1,230 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: mailbox-watcher
+objects:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: mailbox-watcher
+    name: mailbox-watcher
+  spec:
+    lookupPolicy:
+      local: false
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: mailbox-watcher
+    name: mailbox-watcher
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: mailbox-watcher:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        uri: https://github.com/puzzle/mailbox-watcher
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: ruby:2.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: ${GITHUB_WEBHOOK_SECRET}
+      type: GitHub
+    - generic:
+        secret: ${GENERIC_WEBHOOK_SECRET}
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: mailbox-watcher
+    name: mailbox-watcher
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      app: mailbox-watcher
+      deploymentconfig: mailbox-watcher
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: mailbox-watcher
+          deploymentconfig: mailbox-watcher
+      spec:
+        containers:
+        - env:
+          - name: MAIL_MON_TOKEN
+            value: ${MAIL_MON_TOKEN}
+          image: mailbox-watcher
+          imagePullPolicy: Always
+          name: mailbox-watcher
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/app-root/src/config
+            name: project-config
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+          initialDelaySeconds: 15
+        timeoutSeconds: 1
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: project-config
+          name: project-config
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - mailbox-watcher
+        from:
+          kind: ImageStreamTag
+          name: mailbox-watcher:latest
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    latestVersion: 0
+    observedGeneration: 0
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: mailbox-watcher
+    name: mailbox-watcher
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: mailbox-watcher
+      deploymentconfig: mailbox-watcher
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Route
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: mailbox-watcher
+    name: mailbox-watcher
+  spec:
+    host: ${APPLICATION_DOMAIN}
+    port:
+      targetPort: 8080-tcp
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: mailbox-watcher
+      weight: 100
+    wildcardPolicy: None
+- kind: ConfigMap
+  apiVersion: v1
+  metadata:
+    creationTimestamp: null
+    name: project-config
+  data:
+    example.yml: |
+      description: Including production and integration environments
+      mailboxes:
+        mailbox-ops:
+          description: Mailbox for system notifications
+          folders:
+            inbox:
+              description: default folder
+              alert-regex: (Error|Failure)
+            backup:
+              description: messages from integration environment
+              alert-regex: (Error)
+              max-age: 1
+            monitoring:
+              description: icinga notifications
+              max-age: 12
+parameters:
+- description: Github trigger secret. A difficult to guess string encoded as part of the webhook URL. Not encrypted.
+  displayName: GitHub Webhook Secret
+  from: '[a-zA-Z0-9]{40}'
+  generate: expression
+  name: GITHUB_WEBHOOK_SECRET
+- description: Generic trigger secret. A difficult to guess string encoded as part of the webhook URL. Not encrypted.
+  displayName: Generic Webhook Secret
+  from: '[a-zA-Z0-9]{40}'
+  generate: expression
+  name: GENERIC_WEBHOOK_SECRET
+- description: Secret token for mailbox-watcher web frontend authentication.
+  displayName: Secret token
+  from: '[a-zA-Z0-9]{40}'
+  generate: expression
+  name: MAIL_MON_TOKEN
+- description: The exposed hostname that will route to the mailbox-watcher service, if left
+    blank an appropriate default route will be used.
+  displayName: Application Hostname
+  name: APPLICATION_DOMAIN

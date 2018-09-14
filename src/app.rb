@@ -16,20 +16,14 @@ class App < Sinatra::Base
   enable :sessions
   register Sinatra::Flash
 
+  # openshift liveness check
+  get '/healthz' do
+    200
+  end
+
   # start server: puma
   get '/' do
     redirect "/home?token=#{params['token']}"
-  end
-
-  get '/home' do
-    @token = params['token']
-    check_token(@token)
-
-    config_reader = ConfigReader.new
-    @projectnames = config_reader.projectnames
-
-    flash.now[:danger] = t('index.no_project') if @projectnames.empty?
-    haml :index
   end
 
   get '/status' do
@@ -48,6 +42,17 @@ class App < Sinatra::Base
     error_codes = extract_status_codes(project_data['mailboxes'])
     status = error_codes.include?(500) ? 500 : 200
     return status, status.to_s
+  end
+
+  get '/home' do
+    @token = params['token']
+    check_token(@token)
+
+    config_reader = ConfigReader.new
+    @projectnames = config_reader.projectnames
+
+    flash.now[:danger] = t('index.no_project') if @projectnames.empty?
+    haml :index
   end
 
   get '/:project' do
