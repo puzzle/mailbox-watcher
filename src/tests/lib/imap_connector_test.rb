@@ -84,6 +84,23 @@ class ImapConnectorTest < Test::Unit::TestCase
 
       assert_equal 'Build failed in Jenkins', mail.subject
     end
+
+    def test_does_not_return_mail_by_id_if_folder_is_empty
+      imap = mock('imap')
+      Net::IMAP.expects(:new)
+               .with('hostname.example.com', port: 143)
+               .returns(imap)
+      imap.expects(:authenticate)
+          .with('LOGIN', 'bob', '1234')
+          .returns(ok_response)
+      imap.expects(:select)
+          .with('empty-folder')
+          .raises(error('Invalid sequence in Fetch'))
+      imap.expects(:search).never
+
+      assert_nil imap_connector.mail('empty-folder', 3)
+      assert_equal ['Folder empty-folder is empty'], imap_connector.errors
+    end
   end
 
   context 'mails from folder' do
