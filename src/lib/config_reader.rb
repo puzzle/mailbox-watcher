@@ -16,7 +16,7 @@ class ConfigReader
 
   def projects
     projectnames.collect do |projectname|
-      filepath = "#{base_path}/config/#{projectname.downcase}.yml"
+      filepath = config_file_path(projectname)
       @config_file = load_file(filepath)
       next unless secret_file_present?(projectname)
       create_project(projectname)
@@ -24,7 +24,7 @@ class ConfigReader
   end
 
   def projectnames
-    filenames = Dir.glob(['config/*.yml'])
+    filenames = Dir.glob(["#{config_path}/*.yml"])
     filenames.collect do |filename|
       File.basename(filename, '.yml')
     end
@@ -122,7 +122,7 @@ class ConfigReader
   end
 
   def secret_file_present?(projectname)
-    file_path = yaml_path(projectname)
+    file_path = secret_file_path(projectname)
 
     if File.exist?(file_path)
       @secret_file = load_file(file_path)
@@ -133,12 +133,20 @@ class ConfigReader
     false
   end
 
-  def yaml_path(projectname)
-    "#{base_path}/secrets/#{projectname.downcase}.yml"
+  def config_file_path(projectname)
+    "#{config_path}/#{projectname.downcase}.yml"
   end
 
-  def base_path
-    File.expand_path('../..', __dir__)
+  def secret_file_path(projectname)
+    "#{secret_path}/#{projectname.downcase}.yml"
+  end
+
+  def config_path
+    ENV['CONFIG_PATH']
+  end
+
+  def secret_path
+    ENV['SECRET_PATH']
   end
 
   def load_file(file_path)

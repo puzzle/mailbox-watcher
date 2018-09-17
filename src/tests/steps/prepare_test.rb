@@ -11,12 +11,13 @@ class PrepareTest < Test::Unit::TestCase
   context 'prepare project' do
     def test_prepare_project
       Dir.expects(:glob)
-         .with(['config/*.yml'])
+         .with([config_files_path])
          .returns(['test/project1.yml'])
-      ConfigReader.any_instance
-                  .expects(:base_path)
-                  .returns('src/tests/fixtures')
+      ConfigReader.any_instance.expects(:config_path)
+                  .returns('src/tests/fixtures/config')
                   .times(2)
+      ConfigReader.any_instance.expects(:secret_path)
+                  .returns('src/tests/fixtures/secret')
 
       prepare_step = Prepare.new('project1')
       project1 = prepare_step.execute
@@ -29,13 +30,16 @@ class PrepareTest < Test::Unit::TestCase
 
     def test_does_not_return_not_existing_project
       Dir.expects(:glob)
-         .with(['config/*.yml'])
+         .with([config_files_path])
          .returns(['test/project1.yml'])
-      ConfigReader.any_instance.expects(:base_path)
-                  .returns('src/tests/fixtures')
+      ConfigReader.any_instance.expects(:config_path)
+                  .returns('src/tests/fixtures/config')
                   .times(2)
+      ConfigReader.any_instance.expects(:secret_path)
+                  .returns('src/tests/fixtures/secret')
 
       prepare_step = Prepare.new('not-existing-project')
+
       assert_equal nil, prepare_step.execute
       assert_equal 'Config for project not-existing-project not found',
                    prepare_step.errors.first
@@ -44,20 +48,28 @@ class PrepareTest < Test::Unit::TestCase
 
     def test_does_not_return_project_with_no_secret_file
       Dir.expects(:glob)
-         .with(['config/*.yml'])
+         .with([config_files_path])
          .returns(['test/project1.yml'])
-      ConfigReader.any_instance
-                  .expects(:base_path)
-                  .returns('src/tests/fixtures')
-      ConfigReader.any_instance
-                  .expects(:yaml_path)
-                  .returns('src/tests/fixtures/secrets/not-existing-file.yml')
+      ConfigReader.any_instance.expects(:config_path)
+                  .returns('src/tests/fixtures/config')
+                  .times(2)
+      ConfigReader.any_instance.expects(:secret_file_path)
+                               .with('project1')
+                               .returns('src/tests/fixtures/secrets/not-existing-file.yml')
+ 
 
       prepare_step = Prepare.new('not-existing-project')
+
       assert_equal nil, prepare_step.execute
       assert_equal 'Secret-File for project project1 does not exist',
                    prepare_step.errors.first
       assert_equal 404, prepare_step.state
     end
+  end
+  
+  private
+
+  def config_files_path
+    'src/tests/fixtures/config/*.yml'
   end
 end
