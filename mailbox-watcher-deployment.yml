@@ -99,6 +99,10 @@ objects:
         - env:
           - name: MAIL_MON_TOKEN
             value: ${MAIL_MON_TOKEN}
+          - name: CONFIG_PATH
+            value: /mnt/config
+          - name: SECRET_PATH
+            value: /mnt/secret
           image: mailbox-watcher
           imagePullPolicy: Always
           name: mailbox-watcher
@@ -109,7 +113,9 @@ objects:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           volumeMounts:
-          - mountPath: /opt/app-root/src/config
+          - mountPath: /mnt/secret
+            name: project-secrets
+          - mountPath: /mnt/config
             name: project-config
           livenessProbe:
             httpGet:
@@ -123,6 +129,10 @@ objects:
         securityContext: {}
         terminationGracePeriodSeconds: 30
         volumes:
+        - name: project-secrets
+          secret:
+            defaultMode: 420
+            secretName: project-secrets
         - configMap:
             defaultMode: 420
             name: project-config
@@ -186,11 +196,7 @@ objects:
       name: mailbox-watcher
       weight: 100
     wildcardPolicy: None
-- kind: ConfigMap
-  apiVersion: v1
-  metadata:
-    creationTimestamp: null
-    name: project-config
+- apiVersion: v1
   data:
     example.yml: |
       description: Including production and integration environments
@@ -208,6 +214,10 @@ objects:
             monitoring:
               description: icinga notifications
               max-age: 12
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: null
+    name: project-config
 parameters:
 - description: Github trigger secret. A difficult to guess string encoded as part of the webhook URL. Not encrypted.
   displayName: GitHub Webhook Secret
