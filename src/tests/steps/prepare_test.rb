@@ -54,9 +54,8 @@ class PrepareTest < Test::Unit::TestCase
                   .returns('src/tests/fixtures/config')
                   .times(2)
       ConfigReader.any_instance.expects(:secret_file_path)
-                               .with('project1')
-                               .returns('src/tests/fixtures/secrets/not-existing-file.yml')
- 
+                  .with('project1')
+                  .returns('src/tests/fixtures/secrets/not-existing-file.yml')
 
       prepare_step = Prepare.new('not-existing-project')
 
@@ -66,7 +65,7 @@ class PrepareTest < Test::Unit::TestCase
       assert_equal 404, prepare_step.state
     end
   end
-  
+
   private
 
   def config_files_path

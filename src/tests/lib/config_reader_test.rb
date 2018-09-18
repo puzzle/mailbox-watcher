@@ -121,7 +121,7 @@ class ConfigReaderTest < Test::Unit::TestCase
                    .times(2)
       config_reader.expects(:secret_file_path)
                    .with('project1')
-        .returns("#{path_to_fixtures}/secret/invalid_secret_file_without_mailbox.yml")
+                   .returns("#{path_to_fixtures}/secret/invalid_secret_file_without_mailbox.yml")
 
       projects = config_reader.projects
 

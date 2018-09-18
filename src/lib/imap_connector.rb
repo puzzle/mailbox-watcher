@@ -26,7 +26,7 @@ class ImapConnector
     return unless connect
 
     imap.select(foldername)
-    raise Net::IMAP::Error.new('Invalid sequence in Fetch') unless id
+    raise Net::IMAP::Error, 'Invalid sequence in Fetch' unless id
     imap.fetch(id, 'ENVELOPE').first.attr['ENVELOPE']
   rescue Net::IMAP::Error => error
     errors << error_message(error, foldername)
@@ -100,6 +100,6 @@ class ImapConnector
     elsif error.message.include? 'Invalid sequence in Fetch'
       return t('error_messages.folder_empty', foldername: foldername)
     end
-    return error.message
+    error.message
   end
 end

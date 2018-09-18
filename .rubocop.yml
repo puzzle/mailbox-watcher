@@ -6,6 +6,7 @@ Metrics/AbcSize:
     - src/tests/**/*
 
 Metrics/MethodLength:
+  Max: 20
   Exclude:
     - src/tests/**/*
 
@@ -14,8 +15,12 @@ Metrics/BlockLength:
     - src/tests/**/*
 
 Metrics/ClassLength:
+  Max: 120
   Exclude:
     - src/tests/**/*
+
+Metrics/LineLength:
+  Max: 110
 
 Style/Documentation:
   Exclude:

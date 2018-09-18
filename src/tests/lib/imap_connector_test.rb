@@ -142,7 +142,8 @@ class ImapConnectorTest < Test::Unit::TestCase
       imap.expects(:search).never
 
       assert_nil imap_connector.mails_from_folder('not-existing-folder')
-      assert_equal ['Folder not-existing-folder does not exist'], imap_connector.errors
+      assert_equal ['Folder not-existing-folder does not exist'],
+                   imap_connector.errors
     end
 
     def test_returns_mails_from_folder

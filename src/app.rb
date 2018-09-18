@@ -70,7 +70,12 @@ class App < Sinatra::Base
       @project_data = JSON.parse(gr.execute)
     end
 
-    errors = [p.errors, c.errors, project&.errors, mailbox_errors(project)].flatten
+    errors = [
+      p.errors,
+      c.errors,
+      project&.errors,
+      mailbox_errors(project)
+    ].flatten
     errors.compact!
     flash.now[:danger] = errors if errors.any?
 
