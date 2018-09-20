@@ -44,4 +44,4 @@
 
 ### 4 Deployment
 
-* 4.0 [Deployment](https://github.com/puzzle/mailbox-watcher/blob/master/doc/4_deployment/4.0_deployment.md)
+* 4.0 [Deployment](https://github.com/puzzle/mailbox-watcher/blob/master/doc/4_deployment/readme.md)
