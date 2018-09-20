@@ -112,11 +112,6 @@ objects:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          volumeMounts:
-          - mountPath: /mnt/secret
-            name: project-secrets
-          - mountPath: /mnt/config
-            name: project-config
           livenessProbe:
             httpGet:
               path: /healthz
@@ -128,15 +123,6 @@ objects:
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
-        volumes:
-        - name: project-secrets
-          secret:
-            defaultMode: 420
-            secretName: project-secrets
-        - configMap:
-            defaultMode: 420
-            name: project-config
-          name: project-config
     test: false
     triggers:
     - type: ConfigChange
@@ -196,28 +182,6 @@ objects:
       name: mailbox-watcher
       weight: 100
     wildcardPolicy: None
-- apiVersion: v1
-  data:
-    example.yml: |
-      description: Including production and integration environments
-      mailboxes:
-        mailbox-ops:
-          description: Mailbox for system notifications
-          folders:
-            inbox:
-              description: default folder
-              alert-regex: (Error|Failure)
-            backup:
-              description: messages from integration environment
-              alert-regex: (Error)
-              max-age: 1
-            monitoring:
-              description: icinga notifications
-              max-age: 12
-  kind: ConfigMap
-  metadata:
-    creationTimestamp: null
-    name: project-config
 parameters:
 - description: Github trigger secret. A difficult to guess string encoded as part of the webhook URL. Not encrypted.
   displayName: GitHub Webhook Secret
