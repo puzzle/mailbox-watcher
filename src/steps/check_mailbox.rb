@@ -18,7 +18,7 @@ class CheckMailbox < Step
         next false if rules_not_present?(folder)
         error_subject_found && error_max_age_found
       end
-      mailbox.status = mailbox_status(results)
+      mailbox.status = mailbox_status(mailbox, results)
     end
     step_status(mailbox_states)
   end
@@ -88,14 +88,14 @@ class CheckMailbox < Step
     folder.alert_regex.nil? && folder.max_age.nil?
   end
 
-  def mailbox_status(results)
+  def mailbox_status(mailbox, results)
+    mailbox.errors.concat imap_connector.errors.uniq
     results.include?(false) ? 'error' : 'ok'
   end
 
   def step_status(results)
     if results.include?('error')
       @state = 404
-      errors.concat imap_connector.errors
       false
     else
       @state = 200

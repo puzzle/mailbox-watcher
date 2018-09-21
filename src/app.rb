@@ -65,6 +65,7 @@ class App < Sinatra::Base
 
     c = CheckMailbox.new(project)
     if project
+      project.errors.concat p.errors
       c.execute
       gr = GenerateReport.new(project)
       @project_data = JSON.parse(gr.execute)
@@ -98,7 +99,6 @@ class App < Sinatra::Base
 
   def mailbox_errors(project)
     return [] unless project
-
     project
       .mailboxes
       .flat_map do |mailbox|

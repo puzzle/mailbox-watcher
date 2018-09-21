@@ -16,10 +16,12 @@ class GenerateReportTest < Test::Unit::TestCase
 
       assert_equal 'project1', report['projectname']
       assert_equal 'This is a project-description', report['description']
+      assert_equal ['An error appeared in the project'], report['alerts']
 
       assert_equal 'mailbox1', mailbox['name']
       assert_equal 'This is a mailbox-description', mailbox['description']
       assert_equal 'error', mailbox['status']
+      assert_equal ['An error appeared in the mailbox'], mailbox['alerts']
 
       assert_equal 'folder1', folder['name']
       assert_equal 'This is a folder-description', folder['description']
@@ -37,9 +39,11 @@ class GenerateReportTest < Test::Unit::TestCase
   private
 
   def project
-    Project.new('project1',
-                'This is a project-description',
-                mailboxes)
+    project = Project.new('project1',
+                          'This is a project-description',
+                          mailboxes)
+    project.errors << 'An error appeared in the project'
+    project
   end
 
   def mailboxes
@@ -48,6 +52,7 @@ class GenerateReportTest < Test::Unit::TestCase
                           folders,
                           imap_config)
     mailbox.status = 'error'
+    mailbox.errors << 'An error appeared in the mailbox'
     [mailbox]
   end
 
