@@ -227,7 +227,7 @@ class ImapConnectorTest < Test::Unit::TestCase
           .with(3, 'ENVELOPE')
           .returns(fetched_data)
 
-      time = Time.new(2018, 7, 31, 8)
+      time = Time.new(2018, 7, 31, 8, 0, 0, "+02:00")
       assert_equal time, imap_connector.most_recent_mail_date('inbox')
     end
 
