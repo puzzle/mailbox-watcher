@@ -23,6 +23,35 @@ class App < Sinatra::Base
     200
   end
 
+  get '/api/projects' do 
+    check_token(params['token'])
+    config_reader = ConfigReader.new
+    return 200, JSON.generate({'projects' => config_reader.projectnames})
+  end
+
+  get '/api/projects/:name' do
+    check_token(params['token'])
+    
+    projectname = params['name']
+    p = Prepare.new(projectname)
+    project = p.execute
+
+    c = CheckMailbox.new(project)
+    if project
+      project.errors.concat p.errors
+      c.execute
+      gr = GenerateReport.new(project)
+      project_data = gr.execute
+      return 200, project_data
+    end
+    return 404
+  end
+
+  # start server: puma
+  get '/' do
+    redirect "/home?token=#{params['token']}"
+  end
+
   # status for monitoring system
   get '/status' do
     check_token(params['token'])

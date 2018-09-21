@@ -40,7 +40,7 @@ class CheckMailbox < Step
       mail = mail.attr['ENVELOPE']
       regex = /#{folder.alert_regex}/
 
-      if regex.match?(mail.subject)
+      if regex.match(mail.subject)
         folder.alert_mails << alert_mail(mail)
         folder.errors << t('error_messages.regex_matches_with_subject',
                            alert_regex: folder.alert_regex,
