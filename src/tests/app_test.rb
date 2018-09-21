@@ -33,12 +33,6 @@ class AppTest < Test::Unit::TestCase
   end
 
   context 'status' do
-    def test_sinatra_does_not_know_this_ditty
-      get '/not_existing_route'
-
-      assert_equal 401, last_response.status
-    end
-
     def test_status_project_does_not_exist
       CheckToken.any_instance.expects(:valid?).returns(true)
 
