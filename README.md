@@ -1,6 +1,6 @@
 # mailbox-watcher
 
-This Readme explains how to use Mailbox-Watcher
+This Readme explains how to use Mailbox-Watcher.
 
 The Mailbox-Watcher is a web-based mailbox monitoring application,
 which checks the mails from different project mailboxes according to
@@ -28,7 +28,7 @@ $ sudo apt install git-all
 
 ### Ruby
 
-Ruby is an object-oriented programming language
+Ruby is an object-oriented programming language.
 
 ### How to install Ruby on Linux
 
