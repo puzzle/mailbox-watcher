@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/puzzle/mailbox-watcher.svg?branch=master)](https://travis-ci.org/puzzle/mailbox-watcher)
+
 # mailbox-watcher
 
 This Readme explains how to use Mailbox-Watcher.
