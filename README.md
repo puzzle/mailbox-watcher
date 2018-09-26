@@ -31,11 +31,14 @@ $ sudo apt install git-all
 ### Ruby
 
 Ruby is an object-oriented programming language.
+Mailbox-Watcher runs on [Ruby 2.4.4](https://www.ruby-lang.org/en/news/2018/03/28/ruby-2-4-4-released/).
+You can install Ruby with [RVM](https://rvm.io/).
+RVM is a command-line tool which allows you to easily install, manage, and work with multiple ruby environments from interpreters to sets of gems. 
 
-### How to install Ruby on Linux
+### How to install Ruby 2.4.4 with RVM on Linux
 
 ```
-$ sudo apt install ruby
+$ rvm install ruby-2.4.4
 ```
 
 ### Bundler
