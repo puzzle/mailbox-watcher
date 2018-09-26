@@ -12,6 +12,10 @@ class AppTest < Test::Unit::TestCase
     App.new
   end
 
+  def setup 
+    CheckToken.any_instance.stubs(:valid?).returns(true)
+  end
+
   context 'redirect' do
     def test_redirect_to_home_without_token
       get '/'
@@ -32,13 +36,37 @@ class AppTest < Test::Unit::TestCase
     end
   end
 
-  context 'status' do
-    def test_sinatra_does_not_know_this_ditty
-      get '/not_existing_route'
+  context 'api' do
+    def test_returns_projectnames_as_json
+      projects = ['project1', 'project2', 'project3']
 
-      assert_equal 401, last_response.status
+      ConfigReader.any_instance.expects(:projectnames).returns(projects)
+      get '/api/projects'
+
+      assert_equal JSON.generate({'projects' => projects}), last_response.body
+      assert_equal 200, last_response.status
     end
 
+    def test_returns_projectdata_as_json
+      Prepare.any_instance.expects(:execute).returns(project)
+      CheckMailbox.any_instance.expects(:execute).returns(nil)
+
+      gr = GenerateReport.new(project)
+      get '/api/projects/project1'
+
+      assert_equal gr.execute, last_response.body
+      assert_equal 200, last_response.status
+    end
+
+    def test_does_not_return_projectdata_as_json_if_project_does_not_exist
+
+      get '/api/projects/not-existing-project'
+
+      assert_equal 404, last_response.status
+    end
+  end
+
+  context 'status' do
     def test_status_project_does_not_exist
       CheckToken.any_instance.expects(:valid?).returns(true)
 
@@ -48,7 +76,6 @@ class AppTest < Test::Unit::TestCase
     end
 
     def test_status_project_without_errors
-      CheckToken.any_instance.expects(:valid?).returns(true)
       Prepare.any_instance.expects(:execute).returns(true)
       CheckMailbox.any_instance.expects(:execute).returns(nil)
       GenerateReport.any_instance.expects(:execute).returns(nil)
@@ -60,7 +87,6 @@ class AppTest < Test::Unit::TestCase
     end
 
     def test_status_project_with_errors_in_second_and_fourth_mailbox
-      CheckToken.any_instance.expects(:execute).returns(true)
       Prepare.any_instance.expects(:execute).returns(true)
       CheckMailbox.any_instance.expects(:execute).returns(nil)
       GenerateReport.any_instance.expects(:execute).returns(nil)
@@ -72,7 +98,6 @@ class AppTest < Test::Unit::TestCase
     end
 
     def test_status_project_with_errors_in_first_and_second_mailbox
-      CheckToken.any_instance.expects(:execute).returns(true)
       Prepare.any_instance.expects(:execute).returns(true)
       CheckMailbox.any_instance.expects(:execute).returns(nil)
       GenerateReport.any_instance.expects(:execute).returns(nil)
@@ -99,5 +124,42 @@ class AppTest < Test::Unit::TestCase
         'status' => status
       }
     end
+  end
+
+  def project
+    Project.new('project1',
+                'This is a project-description',
+                mailboxes)
+  end
+
+  def mailboxes
+    [Mailbox.new('mailbox1',
+                 'This is a mailbox-description',
+                 folders,
+                 imap_config)]
+  end
+
+  def folders
+      [Folder.new('folder1',
+                  'This is a folder-description',
+                  2,
+                  '(Alert)')]
+  end
+
+  def imap_config
+    ImapConfig.new(mailboxname: 'mailbox1',
+                   username: base64_username,
+                   password: base64_password,
+                   hostname: 'hostname.example.com',
+                   port: 144,
+                   ssl: true)
+  end
+
+  def base64_username
+    Base64.encode64('user')
+  end
+
+  def base64_password
+    Base64.encode64('password')
   end
 end
