@@ -22,6 +22,7 @@ class GenerateReport < Step
     {
       'projectname' => project.projectname,
       'description' => project.description,
+      'alerts' => project.errors,
       'mailboxes' => mailboxes_hash
     }
   end
@@ -32,6 +33,7 @@ class GenerateReport < Step
         'name' => mailbox.name,
         'description' => mailbox.description,
         'status' => mailbox.status,
+        'alerts' => mailbox.errors,
         'folders' => folders_hash(mailbox)
       }
     end
