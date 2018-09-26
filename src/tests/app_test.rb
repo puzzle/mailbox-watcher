@@ -12,6 +12,10 @@ class AppTest < Test::Unit::TestCase
     App.new
   end
 
+  def setup 
+    CheckToken.any_instance.stubs(:valid?).returns(true)
+  end
+
   context 'redirect' do
     def test_redirect_to_home_without_token
       get '/'
@@ -36,8 +40,6 @@ class AppTest < Test::Unit::TestCase
     def test_returns_projectnames_as_json
       projects = ['project1', 'project2', 'project3']
 
-      CheckToken.any_instance.expects(:valid?).returns(true)
-
       ConfigReader.any_instance.expects(:projectnames).returns(projects)
       get '/api/projects'
 
@@ -46,7 +48,6 @@ class AppTest < Test::Unit::TestCase
     end
 
     def test_returns_projectdata_as_json
-      CheckToken.any_instance.expects(:valid?).returns(true)
       Prepare.any_instance.expects(:execute).returns(project)
       CheckMailbox.any_instance.expects(:execute).returns(nil)
 
@@ -58,7 +59,6 @@ class AppTest < Test::Unit::TestCase
     end
 
     def test_does_not_return_projectdata_as_json_if_project_does_not_exist
-      CheckToken.any_instance.expects(:valid?).returns(true)
 
       get '/api/projects/not-existing-project'
 
@@ -76,7 +76,6 @@ class AppTest < Test::Unit::TestCase
     end
 
     def test_status_project_without_errors
-      CheckToken.any_instance.expects(:valid?).returns(true)
       Prepare.any_instance.expects(:execute).returns(true)
       CheckMailbox.any_instance.expects(:execute).returns(nil)
       GenerateReport.any_instance.expects(:execute).returns(nil)
@@ -88,7 +87,6 @@ class AppTest < Test::Unit::TestCase
     end
 
     def test_status_project_with_errors_in_second_and_fourth_mailbox
-      CheckToken.any_instance.expects(:execute).returns(true)
       Prepare.any_instance.expects(:execute).returns(true)
       CheckMailbox.any_instance.expects(:execute).returns(nil)
       GenerateReport.any_instance.expects(:execute).returns(nil)
@@ -100,7 +98,6 @@ class AppTest < Test::Unit::TestCase
     end
 
     def test_status_project_with_errors_in_first_and_second_mailbox
-      CheckToken.any_instance.expects(:execute).returns(true)
       Prepare.any_instance.expects(:execute).returns(true)
       CheckMailbox.any_instance.expects(:execute).returns(nil)
       GenerateReport.any_instance.expects(:execute).returns(nil)
