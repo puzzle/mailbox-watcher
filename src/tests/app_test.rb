@@ -12,26 +12,6 @@ class AppTest < Test::Unit::TestCase
     App.new
   end
 
-  context 'redirect' do
-    def test_redirect_to_home_without_token
-      get '/'
-
-      assert_equal 'http://example.org/home?token=',
-                   last_response.header['Location']
-      assert_equal 302,
-                   last_response.status
-    end
-
-    def test_redirect_to_home_with_token
-      get '/?token=1234'
-
-      assert_equal 'http://example.org/home?token=1234',
-                   last_response.header['Location']
-      assert_equal 302,
-                   last_response.status
-    end
-  end
-
   context 'status' do
     def test_status_project_does_not_exist
       CheckToken.any_instance.expects(:valid?).returns(true)

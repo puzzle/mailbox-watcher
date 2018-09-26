@@ -16,16 +16,14 @@ class App < Sinatra::Base
   enable :sessions
   register Sinatra::Flash
 
+  # start server: puma
+
   # openshift liveness check
   get '/healthz' do
     200
   end
 
-  # start server: puma
-  get '/' do
-    redirect "/home?token=#{params['token']}"
-  end
-
+  # status for monitoring system
   get '/status' do
     check_token(params['token'])
 
@@ -44,7 +42,8 @@ class App < Sinatra::Base
     return status, status.to_s
   end
 
-  get '/home' do
+  # home with projects
+  get '/' do
     @token = params['token']
     check_token(@token)
 
@@ -55,6 +54,7 @@ class App < Sinatra::Base
     haml :index
   end
 
+  # project with reports
   get '/:project' do
     @token = params['token']
     check_token(@token)
