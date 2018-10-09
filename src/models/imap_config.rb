@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
+require_relative 'model'
 require_relative '../lib/locales_helper'
 
-class ImapConfig
+class ImapConfig < Model
   attr_reader :mailboxname, :hostname, :username,
-              :password, :port, :ssl, :errors
+              :password, :port, :ssl
 
   def initialize(mailboxname:, username:, password:, hostname:, port: nil, ssl: nil)
+    super()
     @mailboxname = mailboxname
     @username = username
     @password = password
@@ -15,7 +17,6 @@ class ImapConfig
     @port = port
     ssl ||= false
     @ssl = ssl
-    @errors = []
 
     validate
   end

@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
+require_relative 'model'
 require_relative '../lib/locales_helper'
 
-class Mailbox
-  attr_reader :name, :folders, :status, :errors, :description, :imap_config
+class Mailbox < Model
+  attr_reader :name, :folders, :status,
+              :description, :imap_config
   attr_writer :status
 
   def initialize(name, description = '', folders, imap_config)
+    super()
     @name = name
     @description = description
     @folders = folders
     @imap_config = imap_config
     @status = nil
-    @errors = []
 
     validate
   end

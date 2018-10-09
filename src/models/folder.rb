@@ -1,21 +1,22 @@
 # frozen_string_literal: true
 
+require_relative 'model'
 require_relative '../lib/locales_helper'
 
-class Folder
+class Folder < Model
   attr_reader :name, :description, :max_age,
               :alert_regex, :number_of_mails,
-              :alert_mails, :errors
+              :alert_mails
   attr_writer :number_of_mails
 
   def initialize(name, description = '', max_age, alert_regex)
+    super()
     @name = name
     @description = description
     @max_age = max_age
     @alert_regex = alert_regex
     @number_of_mails = nil
     @alert_mails = []
-    @errors = []
 
     validate
   end

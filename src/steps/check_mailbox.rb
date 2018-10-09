@@ -13,8 +13,8 @@ class CheckMailbox < Step
     mailbox_states = project.mailboxes.collect do |mailbox|
       @imap_connector = ImapConnector.new(mailbox.imap_config)
       results = mailbox.folders.collect do |folder|
-        error_subject_found = check_subject!(folder)
-        error_max_age_found = check_age!(folder)
+        error_subject_found = subject_valid?(folder)
+        error_max_age_found = age_valid?(folder)
         next false if rules_not_present?(folder)
         error_subject_found && error_max_age_found
       end
@@ -27,7 +27,7 @@ class CheckMailbox < Step
 
   attr_reader :project, :imap_connector
 
-  def check_subject!(folder)
+  def subject_valid?(folder)
     mail_ids = imap_connector.mails_from_folder(folder.name)
     return false unless mail_ids
     folder.number_of_mails = mail_ids.count
@@ -36,7 +36,12 @@ class CheckMailbox < Step
 
     mails = imap_connector.mails(folder.name, mail_ids)
     return false unless mails
-    mail_states = mails.collect do |mail|
+
+    mail_states(mails, folder).all?
+  end
+
+  def mail_states(mails, folder)
+    mails.collect do |mail|
       mail = mail.attr['ENVELOPE']
       regex = /#{folder.alert_regex}/
 
@@ -49,8 +54,6 @@ class CheckMailbox < Step
       end
       true
     end
-
-    mail_states.include?(false) ? false : true
   end
 
   def alert_mail(mail)
@@ -61,7 +64,7 @@ class CheckMailbox < Step
     Mail.new(mail.subject, from, mail.date)
   end
 
-  def check_age!(folder)
+  def age_valid?(folder)
     return true if folder.max_age.nil?
 
     latest_mail_date = imap_connector.most_recent_mail_date(folder.name)
