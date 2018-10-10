@@ -47,11 +47,6 @@ class App < Sinatra::Base
     return 404
   end
 
-  # start server: puma
-  get '/' do
-    redirect "/home?token=#{params['token']}"
-  end
-
   # status for monitoring system
   get '/status' do
     check_token(params['token'])

@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
+require_relative 'model'
 require_relative '../lib/locales_helper'
 
-class Project
-  attr_reader :projectname, :description, :mailboxes, :errors
+class Project < Model
+  attr_reader :projectname, :description, :mailboxes
 
   def initialize(projectname, description = '', mailboxes)
+    super()
     @projectname = projectname
     @description = description
     @mailboxes = mailboxes
-    @errors = []
 
     validate
   end
