@@ -32,6 +32,7 @@ GEM
       rack (>= 1.0, < 3)
     rainbow (3.0.0)
     rake (12.3.1)
+    rb-readline (0.5.5)
     rubocop (0.58.2)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -66,6 +67,7 @@ DEPENDENCIES
   puma
   rack-test
   rake
+  rb-readline
   rubocop
   sinatra
   sinatra-flash

@@ -1,0 +1,18 @@
+{{#if (token)}}
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        {{#link-to "home" class="navbar-brand"}}
+          Mailbox-Watcher
+        {{/link-to}}
+      </div>
+      {{projects-dropdown projects=model}}
+    </div>
+  </nav>
+  <div id="outlet">
+    {{outlet}}
+  </div>
+{{else}}
+  {{token-dialog}}
+{{/if}}
+

@@ -1,0 +1,39 @@
+<button
+  hidden
+  id="open-modal-button"
+  data-toggle="modal"
+  data-target="#token-modal"
+>
+</button>
+
+<div
+  class="modal fade"
+  id="token-modal"
+  role="dialog"
+  data-backdrop="static"
+  data-keyboard="false"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Authentification Token</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          A Authentification Token is needed. Please read the
+          <a
+            href="https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.7_authentification_token.md"
+          >
+            Documentation
+          </a>
+          .
+        </p>
+        <form class="token">
+          <div class="form-group">
+            {{input required="true" class="form-control"}} 
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

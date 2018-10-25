@@ -9,7 +9,7 @@ en:
     option_not_defined: "%{option} is not defined in %{mailbox} mailbox options"
     mailbox_not_defined_in_secret_file: "Mailbox %{mailbox} is not defined in Secret-File"
     mail_does_not_exist: "Mail does not exist"
-    regex_matches_with_subject: "Alert regex %{alert_regex} matches with a mail in folder %{folder}"
+    regex_matches_with_subject: "Alert regex %{alert_regex} matches with at least one mail in folder %{folder}"
     folder_does_not_exist: "Folder %{foldername} does not exist"
     project_config_not_found: "Config for project %{projectname} not found"
     authentication_failed: "Authentication with invalid token failed"

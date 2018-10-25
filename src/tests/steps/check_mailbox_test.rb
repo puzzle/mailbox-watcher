@@ -102,7 +102,7 @@ class CheckMailboxTest < Test::Unit::TestCase
 
       assert_equal false, check_mailbox_step.execute
       assert_equal ['Alert regex (Error) matches ' \
-                    'with a mail in folder folder1'],
+                    'with at least one mail in folder folder1'],
                    @folders.first.errors
       assert_equal 404, check_mailbox_step.state
     end
@@ -219,7 +219,7 @@ class CheckMailboxTest < Test::Unit::TestCase
 
       assert_equal false, check_mailbox_step.execute
       assert_equal ['Alert regex (Error) matches ' \
-                    'with a mail in folder folder1'],
+                    'with at least one mail in folder folder1'],
                    @folders.first.errors
       assert_equal 404, check_mailbox_step.state
     end
@@ -267,7 +267,7 @@ class CheckMailboxTest < Test::Unit::TestCase
 
       assert_equal false, check_mailbox_step.execute
       assert_equal ['Alert regex (Error) matches ' \
-                    'with a mail in folder folder1',
+                    'with at least one mail in folder folder1',
                     'Latest mail older than 6 hours'],
                    @folders.first.errors
       assert_equal 404, check_mailbox_step.state

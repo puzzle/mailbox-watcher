@@ -1,0 +1,37 @@
+<div class="mailbox">
+  <div class="mailbox-header {{mailbox.status}}">
+    <h2 class="mailbox-title">{{mailbox.name}}</h2>
+    <a 
+      class="btn-collapse collapsed" 
+      aria-controls="collapse-{{index}}" 
+      aria-expanded="false" 
+      data-toggle="collapse" 
+      href="#collapse-{{index}}" 
+      role="button" 
+      onclick="changeIcon({{index}}, event);"
+    >
+      <a 
+        id="icon-collapse-{{index}}"
+        data-toggle="collapse"
+      >
+        <i class="fa btn-collapse"></i>
+      </a>
+    </a>
+  </div>
+  <div class="collapse multi-collapse" id="collapse-{{index}}">
+    <div class="card card-body">
+      <p id="mailbox-description">{{mailbox.description}}</p>
+      {{#if mailbox.alerts}}
+        <h4>Alerts</h4>
+        {{#each mailbox.alerts as |alert|}}
+          <div class="error alerts">
+            <p>{{alert}}</p>
+          </div>
+        {{/each}}
+      {{/if}}
+      {{#each mailbox.folders as |folder|}}
+        {{folder-listing folder=folder}}
+      {{/each}}
+    </div>
+  </div>
+</div>

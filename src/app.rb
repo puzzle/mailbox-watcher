@@ -23,15 +23,24 @@ class App < Sinatra::Base
     200
   end
 
-  get '/api/projects' do 
+  get '/api/projects' do
     check_token(params['token'])
     config_reader = ConfigReader.new
-    return 200, JSON.generate({'projects' => config_reader.projectnames})
+
+    projects = config_reader.projectnames.map do |name|
+      {
+        'type': 'project',
+        'id': name,
+        'attributes': {
+          'projectname': name
+        }
+      }
+    end
+    return 200, JSON.generate('data': projects)
   end
 
   get '/api/projects/:name' do
     check_token(params['token'])
-    
     projectname = params['name']
     p = Prepare.new(projectname)
     project = p.execute

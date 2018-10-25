@@ -2,8 +2,6 @@
 
 # mailbox-watcher
 
-This Readme explains how to use Mailbox-Watcher.
-
 The Mailbox-Watcher is a web-based mailbox monitoring application,
 which checks the mails from different project mailboxes according to
 specific rules and returns a report.
@@ -20,7 +18,7 @@ specific rules and returns a report.
 
 ### Git
 
-Git is a free software for distributed version management of files initiated by Linus Torvalds.
+What is [Git](https://git-scm.com/)?
 
 ### How to install Git on Linux
 
@@ -30,9 +28,8 @@ $ sudo apt install git-all
 
 ### Ruby
 
-Ruby is an object-oriented programming language.
 Mailbox-Watcher runs on [Ruby 2.4.4](https://www.ruby-lang.org/en/news/2018/03/28/ruby-2-4-4-released/).
-You can install Ruby with [RVM](https://rvm.io/).
+You can install [Ruby](https://www.ruby-lang.org/en/) with [RVM](https://rvm.io/).
 RVM is a command-line tool which allows you to easily install, manage, and work with multiple ruby environments from interpreters to sets of gems. 
 
 ### How to install Ruby 2.4.4 with RVM on Linux
@@ -51,14 +48,19 @@ Bundler provides an environment for Ruby projects by tracking and installing the
 $ gem install bundler
 ```
 
-### How to clone repository 
+### How to clone repository
 
-Clone Mailbox-Watcher repository and change into the new directory:
+Clone the Mailbox-Watcher repository and change into the new directory:
 
 ```
 $ git clone https://github.com/puzzle/mailbox-watcher.git
 $ cd mailbox-watcher/
 ```
+### How to create Config- and Secret-Files
+
+For watching the mailboxes of a project, you first have to create their config files and configure the project specific settings. There is one config-file and one secret-file per project. The config-file contains one or many mailboxes with different folders and rules. The secret-file contains the mailboxes' hostname and credentials.
+
+How you can configure this project can be found here: [config concept](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.3_config_konzept/2.3.1_config_konzept.md).
 
 Execute bundle install:
 
@@ -80,7 +82,7 @@ $ bundle install
 
 ## Featurelist
 
-- Monitors several projects with different mailboxes
-- Checks mails for a maximum age
-- Checks mails subject with a regex
-- Generates projectsite with report
+- Monitors several projects with different mailboxes.
+- Checks mails for a maximum age.
+- Checks mail subjects with a custom regex.
+- Generates project page with a report.

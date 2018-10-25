@@ -1,0 +1,59 @@
+<div class="folder">
+  {{#if folder.number_of_mails}}
+    <h3 
+      class="folder-title title {{if (and (empty folder.alerts) folder.alert_mails) "ok" "error"}}"
+    >
+      {{folder.name}}({{folder.number_of_mails}})
+    </h3>
+    <div class="foldercontent">
+      <div>
+        <h4 class="rules-title">Rules</h4>
+        {{#if folder.max_age}}
+          <p class="rule">max-age: {{folder.max_age}}</p>
+        {{/if}}
+        {{#if folder.alert_regex}}
+          <p class="rule">alert-regex: {{folder.alert_regex}}</p>
+        {{/if}}
+        {{#if folder.description}}
+          <div>
+            <h4 class="description-title">Description</h4>
+            <p>{{folder.description}}</p>
+          </div>
+        {{/if}}
+        {{#if folder.alerts}}
+          <div>
+            <h4>Alerts</h4>
+            {{#each folder.alerts as |alert|}}
+              <div class="error alerts">
+                <p>{{alert}}</p>
+              </div>
+            {{/each}}
+          </div>
+        {{/if}}
+        {{#if folder.alert_mails}}
+          <h4 class="mails-with-alerts-title">Mails with alerts</h4>
+          <table class="table">
+            <thead>
+              <tr>
+                <th class = "col">Subject</th>
+                <th class="col">Sender</th>
+                <th class="col">Received at</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each folder.alert_mails as |alert_mail|}}
+                <tr>
+                  <td>{{alert_mail.subject}}</td>
+                  <td>{{alert_mail.sender}}</td>
+                  <td>{{alert_mail.received_at}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        {{/if}}
+      </div>
+    </div>
+  {{else}}
+    <h3 class="folder-title title error">{{folder.name}}</h3>
+  {{/if}}
+</div>
