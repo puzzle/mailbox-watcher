@@ -72,6 +72,14 @@ $ bundle install
 
 ```$ puma```
 
+### Authentication
+
+For the authentication a token must be given.
+The first time you visit the web application, a pop-up will appear.
+The token you have to pass there must be the same as the environment variable MAIL_MON_TOKEN.
+For development, the token can be customized with changing the environment variable.
+How the token is generated during deployment and where it is saved can be found [here](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.7_authentification_token.md).
+
 ### Run tests
 
 ```$ rake test```
