@@ -1,26 +1,30 @@
-<div>
-  <h1 id="site-title">{{model.projectname}}</h1>
-  <button {{action "reloadModel"}}
-    type="button"
-    id="refresh-button"
-    class="btn pull-right"
-  >
-    Refresh
-  </button>
-  <p id="project-description">{{model.description}}</p>
-  {{#if model.alerts}}
-    <h4>Alerts</h4>
-    {{#each model.alerts as |alert|}}
-      <div class = "error alerts">
-        <p>{{alert}}</p>
-      </div>
+{{#unless model.error}}
+  <div>
+    <h1 id="site-title">{{model.projectname}}</h1>
+    <button {{action "reloadModel"}}
+      type="button"
+      id="refresh-button"
+      class="btn pull-right"
+    >
+      Refresh
+    </button>
+    <p id="project-description">{{model.description}}</p>
+    {{#if model.alerts}}
+      <h4>Alerts</h4>
+      {{#each model.alerts as |alert|}}
+        <div class = "error alerts">
+          <p>{{alert}}</p>
+        </div>
+      {{/each}}
+    {{/if}}
+  </div>
+  <div>
+    {{#each model.mailboxes as |mailbox index|}}
+      {{mailbox-listing mailbox=mailbox index=index}}
     {{/each}}
-  {{/if}}
-</div>
-<div>
-  {{#each model.mailboxes as |mailbox index|}}
-    {{mailbox-listing mailbox=mailbox index=index}}
-  {{/each}}
-</div>
-
-{{outlet}}
+  </div>
+  
+  {{outlet}}
+{{else}}
+  <h2>{{model.message}}</h2>
+{{/unless}}
