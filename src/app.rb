@@ -75,47 +75,6 @@ class App < Sinatra::Base
     return status, status.to_s
   end
 
-  # home with projects
-  get '/' do
-    @token = params['token']
-    check_token(@token)
-
-    config_reader = ConfigReader.new
-    @projectnames = config_reader.projectnames
-
-    flash.now[:danger] = t('index.no_project') if @projectnames.empty?
-    haml :index
-  end
-
-  # project with reports
-  get '/:project' do
-    @token = params['token']
-    check_token(@token)
-
-    projectname = params['project']
-    p = Prepare.new(projectname)
-    project = p.execute
-
-    c = CheckMailbox.new(project)
-    if project
-      project.errors.concat p.errors
-      c.execute
-      gr = GenerateReport.new(project)
-      @project_data = JSON.parse(gr.execute)
-    end
-
-    errors = [
-      p.errors,
-      c.errors,
-      project&.errors,
-      mailbox_errors(project)
-    ].flatten
-    errors.compact!
-    flash.now[:danger] = errors if errors.any?
-
-    haml :project
-  end
-
   private
 
   def extract_status_codes(mailboxes)
