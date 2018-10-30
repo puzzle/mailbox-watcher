@@ -14,6 +14,7 @@ require_relative 'steps/generate_report'
 
 class App < Sinatra::Base
   enable :sessions
+  enable :logging
   register Sinatra::Flash
 
   # start server: puma
