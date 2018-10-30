@@ -6,6 +6,8 @@ The Mailbox-Watcher is a web-based mailbox monitoring application,
 which checks the mails from different project mailboxes according to
 specific rules and returns a report.
 
+Full documentation is found [here](https://github.com/puzzle/mailbox-watcher/blob/master/doc)
+
 ## Prerequisites
 
 - Git
