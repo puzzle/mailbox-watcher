@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 export default Route.extend({
 
   model(params) {
-    var mailMonToken = localStorage.getItem('mail_mon_token')
+    var mailMonToken = localStorage.getItem('authenticityToken')
     return this.store.findRecord('project', params.projectname, { token: mailMonToken })
       .then(function(project){
         return project

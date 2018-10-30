@@ -1,4 +1,6 @@
-{{#unless model.error}}
+{{#if model.error}}
+  <h2>{{model.message}}</h2>
+{{else}}
   <div>
     <h1 id="site-title">{{model.projectname}}</h1>
     <button {{action "reloadModel"}}
@@ -25,6 +27,4 @@
   </div>
   
   {{outlet}}
-{{else}}
-  <h2>{{model.message}}</h2>
-{{/unless}}
+{{/if}}
