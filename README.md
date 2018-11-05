@@ -61,6 +61,11 @@ For watching the mailboxes of a project, you first have to create their config f
 
 How you can configure this project can be found here: [config concept](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.3_config_konzept/2.3.1_config_konzept.md).
 
+```
+$ mkdir ~/tmp/mb/{config,secret}
+```
+Place config and secret files in created directories
+
 ### Start server
 
 ```$ MAIL_MON_TOKEN=1234 puma```
