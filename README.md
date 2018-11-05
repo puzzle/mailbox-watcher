@@ -63,15 +63,11 @@ How you can configure this project can be found here: [config concept](https://g
 
 ### Start server
 
-```$ puma```
+```$ MAIL_MON_TOKEN=1234 puma```
 
-### Authentication
+### Frontend Setup
 
-For the authentication a token must be given.
-The first time you visit the web application, a pop-up will appear.
-The token you have to pass there must be the same as the environment variable MAIL_MON_TOKEN.
-For development, the token can be customized by changing the environment variable.
-How the token is generated during deployment and where it is saved can be found [here](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.7_authentification_token.md).
+Check out [frontend](frontend)
 
 ### Run tests
 
