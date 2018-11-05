@@ -42,12 +42,9 @@ $ rvm install ruby-2.4.4
 
 ### Bundler
 
-Bundler provides an environment for Ruby projects by tracking and installing the gems and versions that are needed.
-
-### How to install Bundler on Linux
-
 ```
 $ gem install bundler
+$ bundle install
 ```
 
 ### How to clone repository
@@ -63,12 +60,6 @@ $ cd mailbox-watcher/
 For watching the mailboxes of a project, you first have to create their config files and configure the project specific settings. There is one config-file and one secret-file per project. The config-file contains one or many mailboxes with different folders and rules. The secret-file contains the mailboxes' hostname and credentials.
 
 How you can configure this project can be found here: [config concept](https://github.com/puzzle/mailbox-watcher/blob/master/doc/2_konzeption/2.3_config_konzept/2.3.1_config_konzept.md).
-
-Execute bundle install:
-
-```
-$ bundle install
-```
 
 ### Start server
 
