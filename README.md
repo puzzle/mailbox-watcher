@@ -68,7 +68,7 @@ Place config and secret files in created directories
 
 ### Start server
 
-```$ MAIL_MON_TOKEN=1234 puma```
+```$ CONFIG_PATH=~/tmp/mb/config SECRET_PATH=~/tmp/mb/secret  MAIL_MON_TOKEN=1234 puma```
 
 ### Frontend Setup
 
