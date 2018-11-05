@@ -12,18 +12,18 @@ class AppTest < Test::Unit::TestCase
     App.new
   end
 
-  def setup 
+  def setup
     CheckToken.any_instance.stubs(:valid?).returns(true)
   end
 
   context 'api' do
     def test_returns_projectnames_as_json
-      projects = ['project1', 'project2', 'project3']
+      projects = %w[project1 project2 project3]
 
       ConfigReader.any_instance.expects(:projectnames).returns(projects)
       get '/api/projects'
 
-      assert_equal JSON.generate({'projects' => projects}), last_response.body
+      assert_equal projectnames_json(projects), last_response.body
       assert_equal 200, last_response.status
     end
 
@@ -39,7 +39,6 @@ class AppTest < Test::Unit::TestCase
     end
 
     def test_does_not_return_projectdata_as_json_if_project_does_not_exist
-
       get '/api/projects/not-existing-project'
 
       assert_equal 404, last_response.status
@@ -120,10 +119,10 @@ class AppTest < Test::Unit::TestCase
   end
 
   def folders
-      [Folder.new('folder1',
-                  'This is a folder-description',
-                  2,
-                  '(Alert)')]
+    [Folder.new('folder1',
+                'This is a folder-description',
+                2,
+                '(Alert)')]
   end
 
   def imap_config
@@ -141,5 +140,21 @@ class AppTest < Test::Unit::TestCase
 
   def base64_password
     Base64.encode64('password')
+  end
+
+  def projectnames_json(projects)
+    JSON.generate('data': projectnames_hash(projects))
+  end
+
+  def projectnames_hash(projects)
+    projects.collect do |project|
+      {
+        'type' => 'project',
+        'id' => project,
+        'attributes' => {
+          'projectname' => project
+        }
+      }
+    end
   end
 end

@@ -1,0 +1,15 @@
+<ul class="nav navbar-nav pull-right">
+  <li class="dropdown">
+    <a class="dropdown-toggle" type="button" data-toggle="dropdown">
+      Projects
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      {{#each projects as |project|}}
+        <li>
+          {{#link-to "project" project.projectname}}{{project.projectname}}{{/link-to}}
+        </li>
+      {{/each}}
+    </ul>
+  </li>
+</ul>
