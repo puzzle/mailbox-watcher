@@ -16,6 +16,7 @@ You will need the following things properly installed on your computer.
 
 * `git clone <repository-url>` this repository
 * `cd mailbox-watcher/frontend`
+* `npm install -g yarn`
 * `yarn install`
 
 ## Running / Development
@@ -43,6 +44,8 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 * `ember build` (development)
 * `ember build --environment production` (production)
+
+For building inside a docker image like https://github.com/puzzle/ose3-rails a script is provided: https://github.com/puzzle/mailbox-watcher/blob/master/frontend/config/build/build_frontend.sh
 
 ### Deploying
 
