@@ -82,6 +82,24 @@ Check out [frontend](frontend)
 
 ```$ rubocop -R```
 
+## Production
+
+Since mailbox watcher is a standard rack application, it can be run with apache/nginx with passenger or with passenger standalone. 
+
+  1. build frontend source (```$ frontend/config/build/build_frontend.sh```)
+  1. copy created artifacts to project's public folder (```$ cp -r frontend/dist/* public```)
+  1. create required secret/config files
+  1. set ENV vars: CONFIG_PATH, SECRET_PATH, MAIL_MON_TOKEN
+  1. configure apache/nginx, passenger or use our ruby 2.5 docker image: https://hub.docker.com/r/puzzle/ose3-rails-nodejs
+  
+## Local Passenger Test
+
+After building/copying the frontend artifacts, you can test it with passenger locally:
+
+```$ gem install passenger```
+
+```$ CONFIG_PATH=~/tmp/mb/config SECRET_PATH=~/tmp/mb/secret  MAIL_MON_TOKEN=1234 passenger start```
+
 ## Featurelist
 
 - Monitors several projects with different mailboxes.
