@@ -1,12 +1,11 @@
-import Route from '@ember/routing/route';
+import Route from "@ember/routing/route";
 
 export default Route.extend({
+  model() {
+    const authenticityToken = localStorage.getItem("authenticityToken");
 
-  model()  {
-    var mailMonToken = localStorage.getItem('authenticityToken')
-
-    if (mailMonToken != null) {
-      return this.store.findAll('project', { token: mailMonToken })
+    if (authenticityToken != null) {
+      return this.store.findAll("project", { token: authenticityToken });
     }
   }
 });
