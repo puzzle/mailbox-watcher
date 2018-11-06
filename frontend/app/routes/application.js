@@ -10,9 +10,20 @@ export default AuthenticatedRoute.extend({
 
   actions: {
     error: function(error) {
-      if (error.errors[0].status === "401") {
-        localStorage.removeItem("authenticityToken");
-        location.reload();
+      const status = error.errors[0].status;
+      switch (status) {
+        case "401": {
+          localStorage.removeItem("authenticityToken");
+          location.reload();
+          break;
+        }
+        case "404": {
+          this.transitionTo("/");
+          break;
+        }
+        default: {
+          break;
+        }
       }
     }
   }

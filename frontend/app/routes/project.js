@@ -1,25 +1,21 @@
 import AuthenticatedRoute from "./authenticated_route";
+import { inject as service } from "@ember/service";
 
 export default AuthenticatedRoute.extend({
+  pendingOperation: service(),
   model(params) {
-    return this.store
+    pendingOperation.start();
+    this.store
       .findRecord("project", params.projectname)
       .then(function(project) {
+        pendingOperation.stop();
         return project;
-      })
-      .catch(function(error) {
-        if (error.errors[0].status == 404) {
-          return {
-            error: true,
-            message: "Project '" + params.projectname + "' was not found"
-          };
-        }
       });
   },
 
   actions: {
-    reloadModel: function() {
-      this.modelFor("project").reload();
+    refresh: function() {
+      this.refresh();
     }
   }
 });
