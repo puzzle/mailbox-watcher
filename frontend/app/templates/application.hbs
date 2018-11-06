@@ -1,4 +1,4 @@
-{{#if (authenticityToken)}}
+{{#if (isAuthenticated)}}
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -9,10 +9,7 @@
       {{projects-dropdown projects=model}}
     </div>
   </nav>
-  <div id="outlet">
-    {{outlet}}
-  </div>
-{{else}}
-  {{token-dialog}}
 {{/if}}
-
+<div id="outlet">
+  {{outlet}}
+</div>

@@ -1,24 +1,25 @@
-import Route from '@ember/routing/route';
-export default Route.extend({
+import AuthenticatedRoute from "./authenticated_route";
 
+export default AuthenticatedRoute.extend({
   model(params) {
-    var mailMonToken = localStorage.getItem('authenticityToken')
-    return this.store.findRecord('project', params.projectname, { token: mailMonToken })
-      .then(function(project){
-        return project
-      }).catch(function(error){
+    return this.store
+      .findRecord("project", params.projectname)
+      .then(function(project) {
+        return project;
+      })
+      .catch(function(error) {
         if (error.errors[0].status == 404) {
           return {
-                  'error': true,
-                  'message': "Project '" + params.projectname + "' was not found"
-                  };
+            error: true,
+            message: "Project '" + params.projectname + "' was not found"
+          };
         }
       });
   },
 
   actions: {
     reloadModel: function() {
-      this.modelFor('project').reload();
+      this.modelFor("project").reload();
     }
   }
 });
