@@ -1,6 +1,7 @@
 import DS from "ember-data";
 
 import $ from "jquery";
+import { run } from '@ember/runloop';
 
 export default DS.JSONAPIAdapter.extend({
   namespace: "api"
@@ -14,9 +15,13 @@ $.ajaxPrefilter(function(options) {
 
 // not very ember way of doing this, but quite simple :)
 $(document).ajaxStart(() => {
-  $('#spinner').removeClass('hide');
+  run(() => {
+    $('#spinner').removeClass('hide');
+  });
 });
 
 $(document).ajaxStop(() => {
-  $('#spinner').addClass('hide');
+  run(() => {
+    $('#spinner').addClass('hide');
+  });
 });
