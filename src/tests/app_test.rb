@@ -107,22 +107,22 @@ class AppTest < Test::Unit::TestCase
 
   def project
     Project.new('project1',
-                'This is a project-description',
-                mailboxes)
+                mailboxes,
+                'This is a project-description')
   end
 
   def mailboxes
     [Mailbox.new('mailbox1',
-                 'This is a mailbox-description',
                  folders,
-                 imap_config)]
+                 imap_config,
+                 'This is a mailbox-description')]
   end
 
   def folders
     [Folder.new('folder1',
-                'This is a folder-description',
                 2,
-                '(Alert)')]
+                '(Alert)',
+                'This is a folder-description')]
   end
 
   def imap_config
@@ -130,8 +130,7 @@ class AppTest < Test::Unit::TestCase
                    username: base64_username,
                    password: base64_password,
                    hostname: 'hostname.example.com',
-                   port: 144,
-                   ssl: true)
+                   options: { port: 144, ssl: true })
   end
 
   def base64_username

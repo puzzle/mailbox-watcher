@@ -60,13 +60,17 @@ class ImapConnector
 
   def connect
     return unless imap_config
-    @imap = Net::IMAP.new(imap_config.hostname, port: imap_config.port)
+    new_imap
     imap.starttls({}, true) if imap_config.ssl
     authenticate
   rescue SocketError
     errors << t('error_messages.server_not_reachable',
                 hostname: imap_config.hostname)
     false
+  end
+
+  def new_imap
+    @imap = Net::IMAP.new(imap_config.hostname, port: imap_config.port)
   end
 
   def authenticate
@@ -91,13 +95,12 @@ class ImapConnector
   def extract_date(foldername, mail_id)
     mail = mail(foldername, mail_id)
     return nil unless mail
-    Time.parse(mail.date)
+    Time.parse(mail.date).utc
   end
 
   def error_message(error, foldername)
-    if error.message.include? 'No matching messages'
-      return t('error_messages.mail_does_not_exist')
-    elsif error.message.include? 'Invalid sequence in Fetch'
+    return t('error_messages.mail_does_not_exist') if error.message.include?('No matching messages')
+    if error.message.include?('Invalid sequence in Fetch')
       return t('error_messages.folder_empty', foldername: foldername)
     end
     error.message

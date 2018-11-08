@@ -10,8 +10,7 @@ class ImapConfigTest < Test::Unit::TestCase
                                    username: 'user',
                                    password: 'password',
                                    hostname: 'hostname.example.com',
-                                   port: 143,
-                                   ssl: false)
+                                   options: { port: 143, ssl: false })
 
       assert_equal [], imap_config.errors
     end
@@ -21,8 +20,7 @@ class ImapConfigTest < Test::Unit::TestCase
                                    username: nil,
                                    password: 'password',
                                    hostname: 'hostname.example.com',
-                                   port: 143,
-                                   ssl: false)
+                                   options: { port: 143, ssl: false })
 
       assert_equal 'username is not defined in mailbox mailbox options',
                    imap_config.errors.first
@@ -33,8 +31,7 @@ class ImapConfigTest < Test::Unit::TestCase
                                    username: nil,
                                    password: nil,
                                    hostname: 'hostname.example.com',
-                                   port: 143,
-                                   ssl: false)
+                                   options: { port: 143, ssl: false })
 
       assert_equal ['username is not defined in mailbox mailbox options',
                     'password is not defined in mailbox mailbox options'],
@@ -46,8 +43,17 @@ class ImapConfigTest < Test::Unit::TestCase
                                    username: 'user',
                                    password: 'password',
                                    hostname: 'hostname.example.com',
-                                   port: nil,
-                                   ssl: false)
+                                   options: { ssl: false })
+
+      assert_equal [], imap_config.errors
+    end
+
+    def test_imap_config_valid_ssl_not_defined
+      imap_config = ImapConfig.new(mailboxname: 'mailbox',
+                                   username: 'user',
+                                   password: 'password',
+                                   hostname: 'hostname.example.com',
+                                   options: { port: 143 })
 
       assert_equal [], imap_config.errors
     end

@@ -24,11 +24,7 @@ class GenerateReport < Step
     { 'data' => {
       'type' => 'project',
       'id' => project.projectname,
-      'attributes' => {
-        'projectname' => project.projectname,
-        'description' => project.description,
-        'alerts' => project.errors
-      },
+      'attributes' => project_attributes(project),
       'relationships' => project.mailboxes.collect do |mailbox|
                            {
                              'mailbox' => {
@@ -43,18 +39,21 @@ class GenerateReport < Step
       'included' => [mailboxes_hash, included].flatten }
   end
 
+  def project_attributes(project)
+    {
+      'projectname' => project.projectname,
+      'description' => project.description,
+      'alerts' => project.errors
+    }
+  end
+
   def mailboxes_hash
     project.mailboxes.collect do |mailbox|
       included.concat folders_hash(mailbox)
       {
         'type' => 'mailbox',
         'id' => mailbox.name,
-        'attributes' => {
-          'name' => mailbox.name,
-          'description' => mailbox.description,
-          'status' => mailbox.status,
-          'alerts' => mailbox.errors
-        },
+        'attributes' => mailbox_attributes(mailbox),
         'relationships' => {
           'project' => {
             'data' => {
@@ -62,17 +61,30 @@ class GenerateReport < Step
               'id' => project.projectname
             }
           },
-          'folders' => {
-            'data' => mailbox.folders.collect do |folder|
-              {
-                'type' => 'folder',
-                'id' => folder.name
-              }
-            end
-          }
+          'folders' => mailbox_folders(mailbox)
         }
       }
     end
+  end
+
+  def mailbox_attributes(mailbox)
+    {
+      'name' => mailbox.name,
+      'description' => mailbox.description,
+      'status' => mailbox.status,
+      'alerts' => mailbox.errors
+    }
+  end
+
+  def mailbox_folders(mailbox)
+    {
+      'data' => mailbox.folders.collect do |folder|
+        {
+          'type' => 'folder',
+          'id' => folder.name
+        }
+      end
+    }
   end
 
   def folders_hash(mailbox)
@@ -81,14 +93,7 @@ class GenerateReport < Step
       {
         'type' => 'folder',
         'id' => folder.name,
-        'attributes' => {
-          'name' => folder.name,
-          'description' => folder.description,
-          'max-age' => format_max_age(folder.max_age),
-          'alert-regex' => folder.alert_regex,
-          'number-of-mails' => folder.number_of_mails,
-          'alerts' => folder.errors.uniq
-        },
+        'attributes' => folder_attributes(folder),
         'relationships' => {
           'mailbox' => {
             'data' => {
@@ -96,17 +101,32 @@ class GenerateReport < Step
               'id' => mailbox.name
             }
           },
-          'mails' => {
-            'data' => folder.alert_mails.collect do |mail|
-              {
-                'type' => 'mail',
-                'id' => mail.subject + mail.received_at
-              }
-            end
-          }
+          'mails' => folder_mails(folder)
         }
       }
     end
+  end
+
+  def folder_attributes(folder)
+    {
+      'name' => folder.name,
+      'description' => folder.description,
+      'max-age' => format_max_age(folder.max_age),
+      'alert-regex' => folder.alert_regex,
+      'number-of-mails' => folder.number_of_mails,
+      'alerts' => folder.errors.uniq
+    }
+  end
+
+  def folder_mails(folder)
+    {
+      'data' => folder.alert_mails.collect do |mail|
+        {
+          'type' => 'mail',
+          'id' => mail.subject + mail.received_at
+        }
+      end
+    }
   end
 
   def mails_hash(folder)
@@ -114,11 +134,7 @@ class GenerateReport < Step
       {
         'type' => 'mail',
         'id' => mail.subject + mail.received_at,
-        'attributes' => {
-          'subject' => mail.subject,
-          'sender' => mail.sender,
-          'received-at' => format_date(mail.received_at)
-        },
+        'attributes' => mail_attributes(mail),
         'relationships' => {
           'folder' => {
             'data' => {
@@ -131,8 +147,16 @@ class GenerateReport < Step
     end
   end
 
+  def mail_attributes(mail)
+    {
+      'subject' => mail.subject,
+      'sender' => mail.sender,
+      'received-at' => format_date(mail.received_at)
+    }
+  end
+
   def format_date(date)
-    t = Time.parse(date)
+    t = Time.parse(date).utc
     t.strftime('%d.%m.%Y')
   end
 

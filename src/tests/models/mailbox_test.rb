@@ -12,13 +12,14 @@ class MailboxTest < Test::Unit::TestCase
                                    password: 'password',
                                    hostname: 'example.hostname.com')
       folders = [Folder.new('folder1',
-                            'this is a folder description',
                             2,
-                            '/(Error|Failure)/')]
+                            '/(Error|Failure)/',
+                            'this is a folder description')]
+
       mailbox = Mailbox.new('mailbox1',
-                            'this is a mailbox description',
                             folders,
-                            imap_config)
+                            imap_config,
+                            'this is a mailbox description')
       assert_equal [], mailbox.errors
     end
 
@@ -28,9 +29,9 @@ class MailboxTest < Test::Unit::TestCase
                                    password: 'password',
                                    hostname: 'example.hostname.com')
       mailbox = Mailbox.new('mailbox1',
-                            'this is a mailbox description',
                             [],
-                            imap_config)
+                            imap_config,
+                            'this is a mailbox description')
       assert_equal 'Folders in mailbox mailbox1 are not valid', mailbox.errors
                                                                        .first
     end

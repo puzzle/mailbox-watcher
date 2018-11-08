@@ -12,9 +12,9 @@ class CheckMailboxTest < Test::Unit::TestCase
   context 'check age' do
     def test_mail_older_than_max_age
       @folders = [Folder.new('folder1',
-                             'This is a folder-description',
                              4,
-                             nil)]
+                             nil,
+                             'This is a folder description')]
 
       ImapConnector.any_instance
                    .expects(:most_recent_mail_date)
@@ -33,9 +33,9 @@ class CheckMailboxTest < Test::Unit::TestCase
 
     def test_mail_younger_than_max_age
       @folders = [Folder.new('folder1',
-                             'This is a folder-description',
                              4,
-                             nil)]
+                             nil,
+                             'This is a folder description')]
 
       ImapConnector.any_instance
                    .expects(:most_recent_mail_date)
@@ -56,9 +56,9 @@ class CheckMailboxTest < Test::Unit::TestCase
   context 'check subject' do
     def test_mail_subject_matches_regex
       @folders = [Folder.new('folder1',
-                             'This is a folder-description',
                              nil,
-                             '(Error)')]
+                             '(Error)',
+                             'This is a folder description')]
 
       ImapConnector.any_instance
                    .expects(:mails_from_folder)
@@ -109,9 +109,9 @@ class CheckMailboxTest < Test::Unit::TestCase
 
     def test_mail_subject_does_not_match_regex
       @folders = [Folder.new('folder1',
-                             'This is a folder-description',
                              nil,
-                             '(Error)')]
+                             '(Error)',
+                             'This is a folder description')]
 
       ImapConnector.any_instance
                    .expects(:mails_from_folder)
@@ -142,9 +142,9 @@ class CheckMailboxTest < Test::Unit::TestCase
   context 'check subject and age' do
     def test_mail_older_than_max_age_and_subject_does_not_match
       @folders = [Folder.new('folder1',
-                             'This is a folder-description',
                              4,
-                             '(Error)')]
+                             '(Error)',
+                             'This is a folder description')]
 
       ImapConnector.any_instance
                    .expects(:mails_from_folder)
@@ -179,9 +179,9 @@ class CheckMailboxTest < Test::Unit::TestCase
 
     def test_mail_younger_than_max_age_and_subject_does_match
       @folders = [Folder.new('folder1',
-                             'This is a folder-description',
                              4,
-                             '(Error)')]
+                             '(Error)',
+                             'This is a folder description')]
 
       ImapConnector.any_instance
                    .expects(:mails_from_folder)
@@ -226,9 +226,9 @@ class CheckMailboxTest < Test::Unit::TestCase
 
     def test_mail_older_than_max_age_and_subject_does_match
       @folders = [Folder.new('folder1',
-                             'This is a folder-description',
                              4,
-                             '(Error)')]
+                             '(Error)',
+                             'This is a folder description')]
 
       ImapConnector.any_instance
                    .expects(:mails_from_folder)
@@ -275,9 +275,9 @@ class CheckMailboxTest < Test::Unit::TestCase
 
     def test_mail_younger_than_max_age_and_subject_does_not_match
       @folders = [Folder.new('folder1',
-                             'This is a folder-description',
                              4,
-                             '(Error)')]
+                             '(Error)',
+                             'This is a folder description')]
 
       ImapConnector.any_instance
                    .expects(:mails_from_folder)
@@ -312,9 +312,9 @@ class CheckMailboxTest < Test::Unit::TestCase
 
     def test_max_age_and_regex_not_defined
       @folders = [Folder.new('folder1',
-                             'This is a folder-description',
                              nil,
-                             nil)]
+                             nil,
+                             'This is a folder description')]
       check_mailbox_step = CheckMailbox.new(project)
       assert_equal false, check_mailbox_step.execute
       assert_equal ['Rules in folder folder1 are not valid'],
@@ -326,27 +326,27 @@ class CheckMailboxTest < Test::Unit::TestCase
   context 'check 2 mailboxes' do
     def test_check_two_valid_mailboxes
       folders1 = [Folder.new('folder1',
-                             'This is a folder-description',
                              10,
-                             nil)]
+                             nil,
+                             'This is a folder description')]
 
       folders2 = [Folder.new('folder2',
-                             'This is a folder-description',
                              10,
-                             nil)]
+                             nil,
+                             'This is a folder-description')]
 
       mailboxes2 = [Mailbox.new('mailbox1',
-                                'This is a mailbox-description',
                                 folders1,
-                                imap_config),
+                                imap_config,
+                                'This is a mailbox-description'),
                     Mailbox.new('mailbox2',
-                                'This is a mailbox-description',
                                 folders2,
-                                imap_config)]
+                                imap_config,
+                                'This is a mailbox-description')]
 
       project2 = Project.new('project2',
-                             'This is a project-description',
-                             mailboxes2)
+                             mailboxes2,
+                             'This is a project-description')
 
       ImapConnector.any_instance
                    .expects(:mails_from_folder)
@@ -379,15 +379,15 @@ class CheckMailboxTest < Test::Unit::TestCase
 
   def project
     Project.new('project1',
-                'This is a project-description',
-                mailboxes)
+                mailboxes,
+                'This is a project-description')
   end
 
   def mailboxes
     [Mailbox.new('mailbox1',
-                 'This is a mailbox-description',
                  @folders,
-                 imap_config)]
+                 imap_config,
+                 'This is a mailbox-description')]
   end
 
   def imap_config
@@ -395,8 +395,7 @@ class CheckMailboxTest < Test::Unit::TestCase
                    username: base64_username,
                    password: base64_password,
                    hostname: 'hostname.example.com',
-                   port: 144,
-                   ssl: true)
+                   options: { port: 144, ssl: true })
   end
 
   def base64_username

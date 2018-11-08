@@ -9,12 +9,12 @@ class Folder < Model
               :alert_mails
   attr_writer :number_of_mails
 
-  def initialize(name, description = '', max_age, alert_regex)
+  def initialize(name, max_age, alert_regex, description = '')
     super()
     @name = name
-    @description = description
     @max_age = max_age
     @alert_regex = alert_regex
+    @description = description
     @number_of_mails = nil
     @alert_mails = []
 

@@ -7,16 +7,14 @@ class ImapConfig < Model
   attr_reader :mailboxname, :hostname, :username,
               :password, :port, :ssl
 
-  def initialize(mailboxname:, username:, password:, hostname:, port: nil, ssl: nil)
+  def initialize(mailboxname:, username:, password:, hostname:, options: {})
     super()
     @mailboxname = mailboxname
     @username = username
     @password = password
     @hostname = hostname
-    port ||= 143
-    @port = port
-    ssl ||= false
-    @ssl = ssl
+    @port = options[:port] || 143
+    @ssl = options[:ssl] || false
 
     validate
   end

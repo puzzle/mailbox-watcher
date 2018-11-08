@@ -57,17 +57,17 @@ class GenerateReportTest < Test::Unit::TestCase
 
   def project
     project = Project.new('project1',
-                          'This is a project-description',
-                          mailboxes)
+                          mailboxes,
+                          'This is a project-description')
     project.errors << 'An error appeared in the project'
     project
   end
 
   def mailboxes
     mailbox = Mailbox.new('mailbox1',
-                          'This is a mailbox-description',
                           folders,
-                          imap_config)
+                          imap_config,
+                          'This is a mailbox-description')
     mailbox.status = 'error'
     mailbox.errors << 'An error appeared in the mailbox'
     [mailbox]
@@ -75,9 +75,9 @@ class GenerateReportTest < Test::Unit::TestCase
 
   def folders
     folder = Folder.new('folder1',
-                        'This is a folder-description',
                         2,
-                        '(Error|Failure)')
+                        '(Error|Failure)',
+                        'This is a folder-description')
     folder.number_of_mails = 1
     folder.alert_mails << mail
     folder.errors << 'Latest mail is older than 42 hours'
@@ -95,8 +95,7 @@ class GenerateReportTest < Test::Unit::TestCase
                    username: base64_username,
                    password: base64_password,
                    hostname: 'hostname.example.com',
-                   port: 144,
-                   ssl: true)
+                   options: { port: 144, ssl: true })
   end
 
   def base64_username

@@ -73,7 +73,7 @@ class CheckMailbox < Step
   end
 
   def latest_mail_older_than?(folder, latest_mail_date)
-    max_age = Time.now - (folder.max_age * 3600)
+    max_age = Time.now.utc - (folder.max_age * 3600)
 
     if latest_mail_date < max_age
       hours = hours_above_max_age(latest_mail_date)
@@ -84,7 +84,7 @@ class CheckMailbox < Step
   end
 
   def hours_above_max_age(latest_mail_date)
-    ((Time.now - latest_mail_date) / 3600).round
+    ((Time.now.utc - latest_mail_date) / 3600).round
   end
 
   def rules_not_present?(folder)

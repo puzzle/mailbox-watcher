@@ -84,7 +84,7 @@ class ConfigReader
   end
 
   def create_project(projectname)
-    Project.new(projectname, project_description, create_mailboxes)
+    Project.new(projectname, create_mailboxes, project_description)
   end
 
   def create_mailboxes
@@ -94,7 +94,7 @@ class ConfigReader
       description = mailbox_description(mailboxname)
       folders = create_folders(mailboxname)
       imap_config = create_imap_config(mailboxname)
-      Mailbox.new(mailboxname, description, folders, imap_config)
+      Mailbox.new(mailboxname, folders, imap_config, description)
     end
   end
 
@@ -104,8 +104,7 @@ class ConfigReader
                    username: imap_config['username'],
                    password: imap_config['password'],
                    hostname: imap_config['hostname'],
-                   port: imap_config['port'],
-                   ssl: imap_config['ssl'])
+                   options: { port: imap_config['port'], ssl: imap_config['ssl'] })
   rescue StandardError
     nil
   end
@@ -114,10 +113,10 @@ class ConfigReader
     return [] unless folders(mailboxname)
 
     folders(mailboxname).collect do |foldername|
-      description = folder_description(mailboxname, foldername)
       max_age = max_age(mailboxname, foldername)
       alert_regex = alert_regex(mailboxname, foldername)
-      Folder.new(foldername, description, max_age, alert_regex)
+      description = folder_description(mailboxname, foldername)
+      Folder.new(foldername, max_age, alert_regex, description)
     end
   end
 
