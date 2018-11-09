@@ -1,0 +1,12 @@
+description: Including production and integration environments
+mailboxes:
+  mailbox42:
+    description: Mailbox for system notifications
+    folders:
+      inbox:
+        description: default folder
+        max-age: 24
+      monitoring:
+        description: icinga notifications
+        alert-regex: (Error)
+        max-age: 10
