@@ -157,7 +157,7 @@ class GenerateReport < Step
 
   def format_date(date)
     t = Time.parse(date).utc
-    t.strftime('%d.%m.%Y')
+    t.strftime('%H:%M, %d.%m.%Y')
   end
 
   def format_max_age(hours)

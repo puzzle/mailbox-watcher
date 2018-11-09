@@ -48,7 +48,7 @@ class GenerateReportTest < Test::Unit::TestCase
       assert_equal 'Error appearedWed, 18 Jul 2018 08:00:00 -0700', mail['id']
       assert_equal 'Error appeared', mail['attributes']['subject']
       assert_equal 'user1@example.com', mail['attributes']['sender']
-      assert_equal '18.07.2018', mail['attributes']['received-at']
+      assert_equal '15:00, 18.07.2018', mail['attributes']['received-at']
       assert_equal 'folder1', mail['relationships']['folder']['data']['id']
     end
   end
