@@ -1,7 +1,12 @@
 language: ruby
+node_js:
+  - 8
 cache: bundler
 rvm:
   - 2.4
   - 2.5
+install:
+  - bundle install
+  - npm install -g ember-cli
 script:
-  - bundle exec rake
+  - bundle exec rake ci

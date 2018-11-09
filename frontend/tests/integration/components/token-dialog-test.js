@@ -12,6 +12,6 @@ module('Integration | Component | token-dialog', function(hooks) {
 
     await render(hbs`{{token-dialog}}`);
 
-    assert.equal(this.element.innerText, 'Authentification Token\n\nA Authentification Token is needed. Please read the Documentation .');
+    assert.equal(this.element.innerText, 'Login');
   });
 });
