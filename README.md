@@ -66,9 +66,18 @@ $ mkdir ~/tmp/mb/{config,secret}
 ```
 Place config and secret files in created directories
 
-### Start server
+### Start server in development
 
 ```$ CONFIG_PATH=~/tmp/mb/config SECRET_PATH=~/tmp/mb/secret  MAIL_MON_TOKEN=1234 puma```
+
+```$ rake start```
+
+Starts puma server with Environment-Variables
+`MAIL_MON_TOKEN=1234`,
+`CONFIG_PATH=./development/fixtures/configs`,
+`SECRET_PATH=./development/fixtures/secrets`.
+
+
 
 ### Frontend Setup
 
