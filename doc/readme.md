@@ -1,3 +1,7 @@
+# Mailbox-Watcher Dokumentation
+
+<img src="sonstiges/mailbox-watcher-logo.png" width="200">
+
 # Inhaltsverzeichnis
 
 ## Phasen
