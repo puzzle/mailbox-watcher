@@ -5,7 +5,7 @@ en:
     mailboxes_not_valid: "Mailboxes in project %{project} are not valid"
     folders_not_valid: "Folders in mailbox %{mailbox} are not valid"
     server_not_reachable: "IMAP-Server %{hostname} not reachable"
-    latest_mail_to_old: "Latest mail older than %{hours} hours"
+    latest_mail_to_old: "Latest mail older than %{amount}"
     option_not_defined: "%{option} is not defined in %{mailbox} mailbox options"
     mailbox_not_defined_in_secret_file: "Mailbox %{mailbox} is not defined in Secret-File"
     mail_does_not_exist: "Mail does not exist"

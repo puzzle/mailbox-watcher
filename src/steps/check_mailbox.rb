@@ -77,7 +77,7 @@ class CheckMailbox < Step
 
     if latest_mail_date < max_age
       hours = hours_above_max_age(latest_mail_date)
-      folder.errors << t('error_messages.latest_mail_to_old', hours: hours)
+      folder.errors << t('error_messages.latest_mail_to_old', amount: max_age_error_time(hours))
       return false
     end
     true
@@ -94,6 +94,11 @@ class CheckMailbox < Step
   def mailbox_status(mailbox, results)
     mailbox.errors.concat imap_connector.errors.uniq
     results.include?(false) ? 'error' : 'ok'
+  end
+
+  def max_age_error_time(hours)
+    return nil unless hours
+    hours > 24 ? (hours / 24).to_s + ' days' : hours.to_s + ' hours'
   end
 
   def step_status(results)
