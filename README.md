@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/puzzle/mailbox-watcher.svg?branch=master)](https://travis-ci.org/puzzle/mailbox-watcher)
 
+<img src="doc/sonstiges/mailbox-watcher-logo.png" width="200">
+
 # mailbox-watcher
 
 The Mailbox-Watcher is a web-based mailbox monitoring application,
