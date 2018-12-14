@@ -25,13 +25,12 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     puma (3.12.0)
-    rack (2.0.5)
+    rack (2.0.6)
     rack-protection (2.0.3)
       rack
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
     rainbow (3.0.0)
-    rake (12.3.1)
     rb-readline (0.5.5)
     rubocop (0.58.2)
       jaro_winkler (~> 1.5.1)
@@ -65,8 +64,8 @@ DEPENDENCIES
   mocha
   pry
   puma
+  rack (>= 2.0.6)
   rack-test
-  rake
   rb-readline
   rubocop
   sinatra
