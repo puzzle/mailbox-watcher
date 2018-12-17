@@ -27,6 +27,7 @@ class ImapConnector
 
     imap.select(foldername)
     raise Net::IMAP::Error, 'Invalid sequence in Fetch' unless id
+
     imap.fetch(id, 'ENVELOPE').first.attr['ENVELOPE']
   rescue Net::IMAP::Error => error
     errors << error_message(error, foldername)
@@ -60,6 +61,7 @@ class ImapConnector
 
   def connect
     return unless imap_config
+
     new_imap
     imap.starttls({}, true) if imap_config.ssl
     authenticate
@@ -84,17 +86,20 @@ class ImapConnector
 
   def username
     return '' unless imap_config.username
+
     Base64.decode64(imap_config.username)
   end
 
   def password
     return '' unless imap_config.password
+
     Base64.decode64(imap_config.password)
   end
 
   def extract_date(foldername, mail_id)
     mail = mail(foldername, mail_id)
     return nil unless mail
+
     Time.parse(mail.date).utc
   end
 
@@ -103,6 +108,7 @@ class ImapConnector
     if error.message.include?('Invalid sequence in Fetch')
       return t('error_messages.folder_empty', foldername: foldername)
     end
+
     error.message
   end
 end

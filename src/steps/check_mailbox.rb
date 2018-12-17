@@ -16,6 +16,7 @@ class CheckMailbox < Step
         error_subject_found = subject_valid?(folder)
         error_max_age_found = age_valid?(folder)
         next false if rules_not_present?(folder)
+
         error_subject_found && error_max_age_found
       end
       mailbox.status = mailbox_status(mailbox, results)
@@ -30,6 +31,7 @@ class CheckMailbox < Step
   def subject_valid?(folder)
     mail_ids = imap_connector.mails_from_folder(folder.name)
     return false unless mail_ids
+
     folder.number_of_mails = mail_ids.count
 
     return true if folder.alert_regex.nil?
@@ -69,6 +71,7 @@ class CheckMailbox < Step
 
     latest_mail_date = imap_connector.most_recent_mail_date(folder.name)
     return false unless latest_mail_date
+
     latest_mail_older_than?(folder, latest_mail_date)
   end
 

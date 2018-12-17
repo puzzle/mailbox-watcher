@@ -92,6 +92,7 @@ class App < Sinatra::Base
 
   def mailbox_errors(project)
     return [] unless project
+
     project
       .mailboxes
       .flat_map do |mailbox|

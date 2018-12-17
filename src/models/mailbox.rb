@@ -25,6 +25,7 @@ class Mailbox < Model
                   mailbox: @name)
     end
     return if imap_config
+
     errors << t('error_messages.mailbox_not_defined_in_secret_file',
                 mailbox: @name)
   end

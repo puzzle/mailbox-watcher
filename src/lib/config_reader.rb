@@ -19,6 +19,7 @@ class ConfigReader
       filepath = config_file_path(projectname)
       @config_file = load_file(filepath)
       next unless secret_file_present?(projectname)
+
       create_project(projectname)
     end.compact
   end

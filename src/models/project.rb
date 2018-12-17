@@ -17,6 +17,7 @@ class Project < Model
 
   def validate
     return unless mailboxes.empty?
+
     errors << t('error_messages.mailboxes_not_valid',
                 project: projectname)
   end

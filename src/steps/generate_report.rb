@@ -162,6 +162,7 @@ class GenerateReport < Step
 
   def format_max_age(hours)
     return nil unless hours
+
     hours > 24 ? (hours / 24).to_s + 'd' : hours.to_s + 'h'
   end
 end
